@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>game</title>
+</head>
+<body>
+    <div id="dadosContainer">
+        <input type="text" id="nomePais1" placeholder="Nome do País 1">
+        <input type="text" id="nomePais2" placeholder="Nome do País 2">
+        <input type="text" id="nomePais3" placeholder="Nome do País 3">
+        <input type="text" id="nomePais4" placeholder="Nome do País 4">
+        <button onclick="game()">Começar Jogo</button> 
+    </div>
+    
+
+    <script>
+        class Pais {
+            constructor(name) {
+                this.name = name;
+                this.hospital = {
+                    capacidade: Math.floor(Math.random() * (20 - 10 + 1)) + 10,
+                    medicos: Math.floor(Math.random() * (20 - 10 + 1)) + 10,
+                    enfermeiras: Math.floor(Math.random() * (20 - 10 + 1)) + 10,
+                    ocupacao: Math.floor(Math.random() * (20 - 10 + 1)) + 10
+                };
+                this.prefeitura = {
+                    pessoal: Math.floor(Math.random() * (20 - 10 + 1)) + 10,
+                    gestao: Math.floor(Math.random() * (20 - 10 + 1)) + 10,
+                    orcamento: Math.floor(Math.random() * (20 - 10 + 1)) + 10,
+                    outros: Math.floor(Math.random() * (20 - 10 + 1)) + 10
+                };
+                this.escola = {
+                    capacidade: Math.floor(Math.random() * (20 - 10 + 1)) + 10,
+                    qualidade: Math.floor(Math.random() * (20 - 10 + 1)) + 10,
+                    professores: Math.floor(Math.random() * (20 - 10 + 1)) + 10,
+                    higiene: Math.floor(Math.random() * (20 - 10 + 1)) + 10
+                };
+                this.academia = {
+                    capacidade: Math.floor(Math.random() * (20 - 10 + 1)) + 10,
+                    higiene: Math.floor(Math.random() * (20 - 10 + 1)) + 10,
+                    ocupacao: Math.floor(Math.random() * (20 - 10 + 1)) + 10,
+                    instrutores: Math.floor(Math.random() * (20 - 10 + 1)) + 10
+                };
+                this.sec_meio_ambiente = {
+                    orcamento: Math.floor(Math.random() * (20 - 10 + 1)) + 10,
+                    pessoal: Math.floor(Math.random() * (20 - 10 + 1)) + 10,
+                    fiscalizacao: Math.floor(Math.random() * (20 - 10 + 1)) + 10,
+                    investimento: Math.floor(Math.random() * (20 - 10 + 1)) + 10
+                };
+            }
+
+            plusHospital(dado, opcao) {
+                if (opcao == 0){
+                    this.hospital[dado]++;
+                }else{
+                    this.hospital[dado]--;
+                }
+            }
+
+            plusPrefeitura(dado, opcao) {
+                if (opcao == 0){
+                    this.prefeitura[dado]++;
+                }else{
+                    this.prefeitura[dado]--;
+                }
+            }
+
+            plusEscola(dado, opcao) {
+                if (opcao == 0){
+                    this.escola[dado]++;
+                }else{
+                    this.escola[dado]--;
+                }
+            }
+
+            plusAcademia(dado, opcao) {
+                if (opcao == 0){
+                    this.academia[dado]++;
+                }else{
+                    this.academia[dado]--;
+                }
+            }
+
+            plusSecMeioAmbiente(dado, opcao) {
+                if (opcao == 0){
+                    this.sec_meio_ambiente[dado]++;
+                }else{
+                    this.sec_meio_ambiente[dado]--;
+                }
+            }
+
+            rate() {
+                let rate = (this.hospital.ocupacao / this.hospital.capacidade * 1.5) + (this.academia.ocupacao / this.academia.capacidade * 1.2);
+                return rate > 0 ? rate : 0;
+            }
+        }
+
+        const paises = [];
+
+        function game() {
+            const nomePais1 = document.getElementById('nomePais1').value;
+            const nomePais2 = document.getElementById('nomePais2').value;
+            const nomePais3 = document.getElementById('nomePais1').value;
+            const nomePais4 = document.getElementById('nomePais2').value;
+
+            paises.push(new Pais(nomePais1));
+            paises.push(new Pais(nomePais2));
+            paises.push(new Pais(nomePais3));
+            paises.push(new Pais(nomePais4));
+            mostrarPaises()
+        }
+
+        function pais(pais) {
+            dadosContainer.innerHTML = `
+                <h1>${paises[pais].name}</h1>
+                <h2>${paises[pais].rate()}</h2>
+                <button onclick="manageEscola(${pais})">escola</button>
+                <button onclick="mostrarPaises()">paises</button>
+            `;
+        }
+
+        function manageEscola(pais) {
+            dadosContainer.innerHTML = `
+                <h1>${paises[pais].name}</h1>
+                <h2>${paises[pais].rate()}</h2>
+                <h3>Escola</h3>
+                <button onclick="paises[${pais}].plusEscola('capacidade', 1); manageEscola(${pais})">-</button>
+                <p>capacidade: ${paises[pais].escola.capacidade}</p>
+                <button onclick="paises[${pais}].plusEscola('capacidade', 0); manageEscola(${pais})">+</button>
+                <button onclick="mostrarPaises()">paises</button>
+            `;
+        }
+
+        // Função para mostrar os nomes dos órgãos quando clicados
+        function mostrarPaises() {
+            dadosContainer.innerHTML = `
+                <button onclick="pais(0)">${paises[0].name}</button> 
+                <button onclick="pais(1)">${paises[1].name}</button> 
+                <button onclick="pais(2)">${paises[2].name}</button> 
+                <button onclick="pais(3)">${paises[3].name}</button>
+            `;
+        }
+    </script>
+</body>
+</html>
