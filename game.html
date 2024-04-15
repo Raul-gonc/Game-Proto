@@ -20,34 +20,54 @@
             constructor(name) {
                 this.name = name;
                 this.hospital = {
-                    capacidade: Math.floor(Math.random() * (20 - 10 + 1)) + 10,
-                    medicos: Math.floor(Math.random() * (20 - 10 + 1)) + 10,
-                    enfermeiras: Math.floor(Math.random() * (20 - 10 + 1)) + 10,
-                    ocupacao: Math.floor(Math.random() * (20 - 10 + 1)) + 10
+                    tabagismo: 10,
+                    hipertensao: 26.3,
+                    doencas_respiratorias: 30,
+                    diabetes: 6.9,
+                    vacinacao: 52.1,
+                    alcolismo: 16,
+                    mental: 9.3,
+                    n_internacoes: 7.8,
+                    n_nascimentos: 1.5,
+                    expectativa_de_vida: 76.2,
+                    n_leitos: 3
                 };
                 this.prefeitura = {
-                    pessoal: Math.floor(Math.random() * (20 - 10 + 1)) + 10,
-                    gestao: Math.floor(Math.random() * (20 - 10 + 1)) + 10,
-                    orcamento: Math.floor(Math.random() * (20 - 10 + 1)) + 10,
-                    outros: Math.floor(Math.random() * (20 - 10 + 1)) + 10
+                    idade_media: 35,
+                    homens: 48.5,
+                    mulheres: 51.5,
+                    renda_media: 1893,
+                    idh: 760,
+                    pobreza: 5.9,
+                    desemprego: 7.8,
+                    população: 214000000,
+                    n_vereadores: 16
                 };
                 this.escola = {
-                    capacidade: Math.floor(Math.random() * (20 - 10 + 1)) + 10,
-                    qualidade: Math.floor(Math.random() * (20 - 10 + 1)) + 10,
-                    professores: Math.floor(Math.random() * (20 - 10 + 1)) + 10,
-                    higiene: Math.floor(Math.random() * (20 - 10 + 1)) + 10
+                    ensino_medio: 48,
+                    acesso_internet: 84,
+                    analfabetismo: 5.8,
+                    evasao: 5.9,
+                    baixo_rendimento: 59.8,
+                    jovens: 402,
+                    adultos: 505,
+                    idosos: 93
                 };
                 this.academia = {
-                    capacidade: Math.floor(Math.random() * (20 - 10 + 1)) + 10,
-                    higiene: Math.floor(Math.random() * (20 - 10 + 1)) + 10,
-                    ocupacao: Math.floor(Math.random() * (20 - 10 + 1)) + 10,
-                    instrutores: Math.floor(Math.random() * (20 - 10 + 1)) + 10
+                    frequentadores: 10.8,
+                    obesidade: 24.3,
+                    sedentarismo: 47,
+                    alimentacao_saudavel: 70
                 };
                 this.sec_meio_ambiente = {
-                    orcamento: Math.floor(Math.random() * (20 - 10 + 1)) + 10,
-                    pessoal: Math.floor(Math.random() * (20 - 10 + 1)) + 10,
-                    fiscalizacao: Math.floor(Math.random() * (20 - 10 + 1)) + 10,
-                    investimento: Math.floor(Math.random() * (20 - 10 + 1)) + 10
+                    saneamento: 56,
+                    residuos: 4,
+                    un_conservacao: 36,
+                    qualida_aqua: 10,
+                    qualidade_ar: 23,
+                    coleta_seletiva: 4,
+                    bioma_nativo: 28,
+                    licencas: 16
                 };
             }
 
@@ -92,7 +112,11 @@
             }
 
             rate() {
-                let rate = (this.hospital.ocupacao / this.hospital.capacidade * 1.5) + (this.academia.ocupacao / this.academia.capacidade * 1.2);
+                let rateA = 1;
+                let rateB = 1;
+                let rateC = this.academia.frequentadores + this.prefeitura.n_vereadores + (100*this.prefeitura.homens/this.prefeitura.mulheres) 
+                + this.hospital.expectativa_de_vida + this.hospital.n_nascimentos + (this.escola.jovens/(this.escola.jovens + this.escola.adultos +this.escola.idosos));
+                let rate = rateA + 0.4*rateB + 0.1*rateC;
                 return rate > 0 ? rate : 0;
             }
         }
@@ -117,8 +141,31 @@
                 <h1>${paises[pais].name}</h1>
                 <h2>${paises[pais].rate()}</h2>
                 <button onclick="manageEscola(${pais})">escola</button>
+                <button onclick="manageAcademia(${pais})">academia</button>
+                <button onclick="managePrefeitura(${pais})">prefeitua</button>
+                <button onclick="manageAcademia(${pais})">secretaria de meio ambiente</button>
+                <button onclick="manageHospital(${pais})">hospital</button>
                 <button onclick="mostrarPaises()">paises</button>
             `;
+        }
+
+        function manageSecMeioAmbiente(pais) {
+            dadosContainer.innerHTML = `
+                <h1>${paises[pais].name}</h1>
+                <h2>${paises[pais].rate()}</h2>
+                <h3>secretaria de meio ambiente</h3>
+                <button onclick="pais(${pais})">voltar</button> 
+                <button onclick="mostrarPaises()">paises</button>
+            `;
+            for(var dado in paises[pais].sec_meio_ambiente){
+                //console.log(dado)
+                dadosContainer.innerHTML += `
+                </br>
+                <p>${dado}: ${paises[pais].sec_meio_ambiente[dado]}</p>
+                <button onclick="paises[${pais}].plusSecMeioAmbiente('${dado}', 1); manageSecMeioAmbiente(${pais})">-</button>
+                <button onclick="paises[${pais}].plusSecMeioAmbiente('${dado}', 0); manageSecMeioAmbiente(${pais})">+</button>
+            `;
+            }
         }
 
         function manageEscola(pais) {
@@ -126,11 +173,75 @@
                 <h1>${paises[pais].name}</h1>
                 <h2>${paises[pais].rate()}</h2>
                 <h3>Escola</h3>
-                <button onclick="paises[${pais}].plusEscola('capacidade', 1); manageEscola(${pais})">-</button>
-                <p>capacidade: ${paises[pais].escola.capacidade}</p>
-                <button onclick="paises[${pais}].plusEscola('capacidade', 0); manageEscola(${pais})">+</button>
+                <button onclick="pais(${pais})">voltar</button> 
                 <button onclick="mostrarPaises()">paises</button>
             `;
+            for(var dado in paises[pais].escola){
+                //console.log(dado)
+                dadosContainer.innerHTML += `
+                </br>
+                <p>${dado}: ${paises[pais].escola[dado]}</p>
+                <button onclick="paises[${pais}].plusEscola('${dado}', 1); manageEscola(${pais})">-</button>
+                <button onclick="paises[${pais}].plusEscola('${dado}', 0); manageEscola(${pais})">+</button>
+            `;
+            }
+        }
+
+        function manageHospital(pais) {
+            dadosContainer.innerHTML = `
+                <h1>${paises[pais].name}</h1>
+                <h2>${paises[pais].rate()}</h2>
+                <h3>Hospital</h3>
+                <button onclick="pais(${pais})">voltar</button> 
+                <button onclick="mostrarPaises()">paises</button>
+            `;
+            for(var dado in paises[pais].hospital){
+                //console.log(dado)
+                dadosContainer.innerHTML += `
+                </br>
+                <p>${dado}: ${paises[pais].hospital[dado]}</p>
+                <button onclick="paises[${pais}].plusHospital('${dado}', 1); manageHospital(${pais})">-</button>
+                <button onclick="paises[${pais}].plusHospital('${dado}', 0); manageHospital(${pais})">+</button>
+            `;
+            }
+        }
+
+        function manageAcademia(pais) {
+            dadosContainer.innerHTML = `
+                <h1>${paises[pais].name}</h1>
+                <h2>${paises[pais].rate()}</h2>
+                <h3>Academia</h3>
+                <button onclick="pais(${pais})">voltar</button> 
+                <button onclick="mostrarPaises()">paises</button>
+            `;
+            for(var dado in paises[pais].academia){
+                //console.log(dado)
+                dadosContainer.innerHTML += `
+                </br>
+                <p>${dado}: ${paises[pais].academia[dado]}</p>
+                <button onclick="paises[${pais}].plusAcademia('${dado}', 1); manageAcademia(${pais})">-</button>
+                <button onclick="paises[${pais}].plusAcademia('${dado}', 0); manageAcademia(${pais})">+</button>
+            `;
+            }
+        }
+
+        function managePrefeitura(pais) {
+            dadosContainer.innerHTML = `
+                <h1>${paises[pais].name}</h1>
+                <h2>${paises[pais].rate()}</h2>
+                <h3>Prefeitura</h3>
+                <button onclick="pais(${pais})">voltar</button> 
+                <button onclick="mostrarPaises()">paises</button>
+            `;
+            for(var dado in paises[pais].prefeitura){
+                //console.log(dado)
+                dadosContainer.innerHTML += `
+                </br>
+                <p>${dado}: ${paises[pais].prefeitura[dado]}</p>
+                <button onclick="paises[${pais}].plusPrefeitura('${dado}', 1); managePrefeitura(${pais})">-</button>
+                <button onclick="paises[${pais}].plusPrefeitura('${dado}', 0); managePrefeitura(${pais})">+</button>
+            `;
+            }
         }
 
         // Função para mostrar os nomes dos órgãos quando clicados
@@ -142,6 +253,8 @@
                 <button onclick="pais(3)">${paises[3].name}</button>
             `;
         }
+
+
     </script>
 </body>
 </html>
