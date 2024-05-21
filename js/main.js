@@ -1,7 +1,7 @@
 const config = {
   type: Phaser.AUTO,
   scale: {
-    mode: Phaser.Scale.AUTO,
+    mode: Phaser.Scale.RESIZE,
     parent: "game",
     autoCenter: Phaser.Scale.CENTER_BOTH,
   },
