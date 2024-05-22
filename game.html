@@ -2,295 +2,500 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>game</title>
+    <title>Países</title>
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-    <div id="dadosContainer">
-        <h3>Pais 1:</h3>
-        <input type="text" id="nomePais1" placeholder="Nome do País 1">
-        <h3>Pais 2:</h3>
-        <input type="text" id="nomePais2" placeholder="Nome do País 2">
-        <h3>Pais 3:</h3>
-        <input type="text" id="nomePais3" placeholder="Nome do País 3">
-        <h3>Pais 4:</h3>
-        <input type="text" id="nomePais4" placeholder="Nome do País 4"></br>
-        <button onclick="game()">Começar Jogo</button> 
-    </div>
     
 
+    <div id="dadosContainer">
+        <div id="inputContainer">
+            <input type="text" id="nomePais1" placeholder="Nome do País 1">
+            <input type="text" id="nomePais2" placeholder="Nome do País 2">
+            <input type="text" id="nomePais3" placeholder="Nome do País 3">
+            <input type="text" id="nomePais4" placeholder="Nome do País 4">
+            <button onclick="game()">Adicionar Países</button>
+        </div>
+    </div>
+
     <script>
+        const paises = [];
+
         class Pais {
-            constructor(name) {
+            constructor(name, hospital, prefeitura, escola, academia, sec_meio_ambiente) {
                 this.name = name;
-                this.hospital = {
-                    tabagismo: 10,
-                    hipertensao: 26.3,
-                    doencas_respiratorias: 30,
-                    diabetes: 6.9,
-                    vacinacao: 52.1,
-                    alcolismo: 16,
-                    mental: 9.3,
-                    n_internacoes: 7.8,
-                    n_nascimentos: 1.5,
-                    expectativa_de_vida: 76.2,
-                    n_leitos: 3
+                this.escola = escola || {
+                    ensino_medio: { 
+                        valor: 48, 
+                        min: 1, 
+                        max: 100 
+                    },
+                    acesso_internet: { 
+                        valor: 84, 
+                        min: 1, 
+                        max: 100 
+                    },
+                    analfabetismo: { 
+                        valor: 5.8, 
+                        min: 1, 
+                        max: 100 
+                    },
+                    evasao: { 
+                        valor: 5.9, 
+                        min: 1, 
+                        max: 100 
+                    },
+                    baixo_rendimento: { 
+                        valor: 59.8, 
+                        min: 1, 
+                        max: 100 
+                    },
+                    jovens: { 
+                        valor: 402, 
+                        min: 1, 
+                        max: 100 
+                    },
+                    adultos: { 
+                        valor: 505, 
+                        min: 1, 
+                        max: 100 
+                    },
+                    idosos: { 
+                        valor: 93, 
+                        min: 1, 
+                        max: 100 
+                    }
                 };
-                this.prefeitura = {
-                    idade_media: 35,
-                    homens: 48.5,
-                    mulheres: 51.5,
-                    renda_media: 1893,
-                    idh: 760,
-                    pobreza: 5.9,
-                    desemprego: 7.8,
-                    população: 214000000,
-                    n_vereadores: 16
+
+                this.hospital = hospital || {
+                    tabagismo: { 
+                        valor: 10, 
+                        min: 1, 
+                        max: 100 
+                    },
+                    hipertensao: { 
+                        valor: 26.3, 
+                        min: 1, 
+                        max: 100 
+                    },
+                    doencas_respiratorias: { 
+                        valor: 30, 
+                        min: 1, 
+                        max: 100 
+                    },
+                    diabetes: { 
+                        valor: 6.9, 
+                        min: 1, 
+                        max: 100 
+                    },
+                    vacinacao: { 
+                        valor: 52.1, 
+                        min: 1, 
+                        max: 100 
+                    },
+                    alcolismo: { 
+                        valor: 16, 
+                        min: 1, 
+                        max: 100 
+                    },
+                    mental: { 
+                        valor: 9.3, 
+                        min: 1, 
+                        max: 100 
+                    },
+                    n_internacoes: { 
+                        valor: 7.8, 
+                        min: 1, 
+                        max: 100 
+                    },
+                    n_nascimentos: { 
+                        valor: 1.5, 
+                        min: 1, 
+                        max: 15 
+                    },
+                    expectativa_de_vida: { 
+                        valor: 76.2, 
+                        min: 1, 
+                        max: 100 
+                    },
+                    n_leitos: { 
+                        valor: 3, 
+                        min: 1, 
+                        max: 100 
+                    }
                 };
-                this.escola = {
-                    ensino_medio: 48,
-                    acesso_internet: 84,
-                    analfabetismo: 5.8,
-                    evasao: 5.9,
-                    baixo_rendimento: 59.8,
-                    jovens: 402,
-                    adultos: 505,
-                    idosos: 93
+
+                this.prefeitura = prefeitura || {
+                    idade_media: { 
+                        valor: 35, 
+                        min: 1, 
+                        max: 100 
+                    },
+                    homens: { 
+                        valor: 48.5, 
+                        min: 1, 
+                        max: 100 
+                    },
+                    mulheres: { 
+                        valor: 51.5, 
+                        min: 1, 
+                        max: 100 
+                    },
+                    renda_media: { 
+                        valor: 1893, 
+                        min: 1, 
+                        max: 10000 
+                    },
+                    idh: { 
+                        valor: 760, 
+                        min: 0, 
+                        max: 1000 
+                    },
+                    pobreza: { 
+                        valor: 5.9, 
+                        min: 1, 
+                        max: 100 
+                    },
+                    desemprego: { 
+                        valor: 7.8, 
+                        min: 1, 
+                        max: 31 
+                    },
+                    população: { 
+                        valor: 214000000, 
+                        min: 1, 
+                        max: 10000000000 
+                    },
+                    n_vereadores: { 
+                        valor: 16, 
+                        min: 1, 
+                        max: 100 
+                    }
                 };
-                this.academia = {
-                    frequentadores: 10.8,
-                    obesidade: 24.3,
-                    sedentarismo: 47,
-                    alimentacao_saudavel: 70
+
+                this.academia = academia || {
+                    frequentadores: { 
+                        valor: 10.8, 
+                        min: 1, 
+                        max: 100 
+                    },
+                    obesidade: { 
+                        valor: 24.3, 
+                        min: 1, 
+                        max: 100 
+                    },
+                    sedentarismo: { 
+                        valor: 47, 
+                        min: 1, 
+                        max: 100 
+                    },
+                    alimentacao_saudavel: { 
+                        valor: 70, 
+                        min: 1, 
+                        max: 100 
+                    }
                 };
-                this.sec_meio_ambiente = {
-                    saneamento: 56,
-                    residuos: 4,
-                    un_conservacao: 36,
-                    qualida_aqua: 10,
-                    qualidade_ar: 23,
-                    coleta_seletiva: 4,
-                    bioma_nativo: 28,
-                    licencas: 16
+
+                this.sec_meio_ambiente = sec_meio_ambiente || {
+                    saneamento: { 
+                        valor: 56, 
+                        min: 1, 
+                        max: 100 
+                    },
+                    residuos: { 
+                        valor: 4, 
+                        min: 1, 
+                        max: 100 
+                    },
+                    un_conservacao: { 
+                        valor: 36, 
+                        min: 1, 
+                        max: 100 
+                    },
+                    qualida_aqua: { 
+                        valor: 10, 
+                        min: 1, 
+                        max: 100 
+                    },
+                    qualidade_ar: { 
+                        valor: 23, 
+                        min: 1, 
+                        max: 100 
+                    },
+                    coleta_seletiva: { 
+                        valor: 4, 
+                        min: 1, 
+                        max: 100 
+                    },
+                    bioma_nativo: { 
+                        valor: 28, 
+                        min: 1, 
+                        max: 100 
+                    },
+                    licencas: { 
+                        valor: 16, 
+                        min: 1, 
+                        max: 100 
+                    }
                 };
             }
 
             plusHospital(dado, opcao) {
-                if (opcao == 0){
-                    this.hospital[dado]++;
-                }else{
-                    this.hospital[dado]--;
+                const hospital = this.hospital[dado];
+                if (opcao === 0) {
+                    this.hospital[dado].valor = Math.min(hospital.valor + 1, hospital.max);
+                } else {
+                    this.hospital[dado].valor = Math.max(hospital.valor - 1, hospital.min);
                 }
             }
 
             plusPrefeitura(dado, opcao) {
-                if (opcao == 0){
-                    this.prefeitura[dado]++;
-                }else{
-                    this.prefeitura[dado]--;
+                const prefeitura = this.prefeitura[dado];
+                if (opcao === 0) {
+                    this.prefeitura[dado].valor = Math.min(prefeitura.valor + 1, prefeitura.max);
+                } else {
+                    this.prefeitura[dado].valor = Math.max(prefeitura.valor - 1, prefeitura.min);
                 }
             }
 
             plusEscola(dado, opcao) {
-                if (opcao == 0){
-                    this.escola[dado]++;
-                }else{
-                    this.escola[dado]--;
+                const escola = this.escola[dado];
+                if (opcao === 0) {
+                    this.escola[dado].valor = Math.min(escola.valor + 1, escola.max);
+                } else {
+                    this.escola[dado].valor = Math.max(escola.valor - 1, escola.min);
                 }
             }
 
             plusAcademia(dado, opcao) {
-                if (opcao == 0){
-                    this.academia[dado]++;
-                }else{
-                    this.academia[dado]--;
+                const academia = this.academia[dado];
+                if (opcao === 0) {
+                    this.academia[dado].valor = Math.min(academia.valor + 1, academia.max);
+                } else {
+                    this.academia[dado].valor = Math.max(academia.valor - 1, academia.min);
                 }
             }
 
             plusSecMeioAmbiente(dado, opcao) {
-                if (opcao == 0){
-                    this.sec_meio_ambiente[dado]++;
-                }else{
-                    this.sec_meio_ambiente[dado]--;
+                const secMeioAmbiente = this.sec_meio_ambiente[dado];
+                if (opcao === 0) {
+                    this.sec_meio_ambiente[dado].valor = Math.min(secMeioAmbiente.valor + 1, secMeioAmbiente.max);
+                } else {
+                    this.sec_meio_ambiente[dado].valor = Math.max(secMeioAmbiente.valor - 1, secMeioAmbiente.min);
                 }
             }
 
             rate() {
-                let rateB = this.hospital.mental +
-                    this.hospital.n_internacoes +
-                    this.prefeitura.idade_media +
-                    this.prefeitura.renda_media +
-                    this.prefeitura.desemprego +
-                    this.prefeitura.população/10000000 +
-                    this.escola.evasao +
-                    this.escola.baixo_rendimento +
-                    (this.escola.adultos/(this.escola.jovens + this.escola.adultos +this.escola.idosos))
-                    this.academia.sedentarismo +
-                    this.academia.alimentacao_saudavel +
-                    this.sec_meio_ambiente.licencas;
-                let rateA = this.hospital.tabagismo +
-                    this.hospital.hipertensao +
-                    this.hospital.doencas_respiratorias +
-                    this.hospital.diabetes +
-                    this.hospital.vacinacao +
-                    this.hospital.alcolismo +
-                    this.prefeitura.idh/1000 +
-                    this.prefeitura.pobreza +
-                    this.escola.ensino_medio +
-                    this.escola.acesso_internet +
-                    this.escola.analfabetismo +
-                    (this.escola.idosos/(this.escola.jovens + this.escola.adultos +this.escola.idosos))
-                    this.academia.obesidade +
-                    this.sec_meio_ambiente.saneamento
-                    this.sec_meio_ambiente.residuos +
-                    this.sec_meio_ambiente.un_conservacao +
-                    this.sec_meio_ambiente.qualida_aqua +
-                    this.sec_meio_ambiente.qualidade_ar +
-                    this.sec_meio_ambiente.coleta_seletiva +
-                    this.sec_meio_ambiente.bioma_nativo;
-                let rateC = this.academia.frequentadores + this.prefeitura.n_vereadores + (100*this.prefeitura.homens/this.prefeitura.mulheres) 
-                + this.hospital.expectativa_de_vida + this.hospital.n_nascimentos + (this.escola.jovens/(this.escola.jovens + this.escola.adultos +this.escola.idosos));
-                let rate = rateA + 0.4*rateB + 0.1*rateC;
-                return rate > 0 ? rate : 0;
-            }
-        }
+                let taxa = 1;
 
-        const paises = [];
+                // Escola (Educação)
+                taxa /= (this.escola.ensino_medio.valor) * 1.1; //-
+                taxa /= (this.escola.acesso_internet.valor); //-
+                taxa *= (this.escola.analfabetismo.valor) * 1.1; //+
+                taxa *= (this.escola.evasao.valor); //+
+                taxa *= (this.escola.baixo_rendimento.valor); //+
+
+                // Hospital (Saúde)
+                taxa *= (this.hospital.tabagismo.valor) * 1.1; //+
+                taxa *= (this.hospital.hipertensao.valor) * 1.1; //+
+                taxa *= (this.hospital.doencas_respiratorias.valor) * 1.1; //+
+                taxa *= (this.hospital.diabetes.valor) * 1.1; //+
+                taxa /= (this.hospital.vacinacao.valor) * 1.1; //+
+                taxa *= (this.hospital.alcolismo.valor) * 1.1; //+
+                taxa *= (this.hospital.mental.valor); //+
+                taxa *= (this.hospital.n_internacoes.valor); //+
+                taxa /= (this.hospital.n_leitos.valor); //-
+
+                // Prefeitura (Economia)
+                taxa *= (this.prefeitura.idade_media.valor); //+
+                taxa /= (this.prefeitura.renda_media.valor); //-
+                taxa *= (this.prefeitura.idh.valor) * 1.1; //+
+                taxa *= (this.prefeitura.pobreza.valor) * 1.1; //+
+                taxa *= (this.prefeitura.desemprego.valor); //+
+                // mortes += (100 - this.prefeitura.população.valor);
+
+                // Academia
+                taxa *= (this.academia.obesidade.valor); //+
+                taxa *= (this.academia.sedentarismo.valor); //+
+                taxa /= (this.academia.alimentacao_saudavel.valor); //-
+
+                // Secretaria de Meio Ambiente (Ambiente)
+                taxa /= (this.sec_meio_ambiente.saneamento.valor) * 1.1; //-
+                taxa /= (this.sec_meio_ambiente.residuos.valor) * 1.1; //-
+                taxa /= (this.sec_meio_ambiente.un_conservacao.valor) * 1.1; //-
+                taxa /= (this.sec_meio_ambiente.qualida_aqua.valor) * 1.1; //-
+                taxa /= (this.sec_meio_ambiente.qualidade_ar.valor) * 1.1; //-
+                taxa /= (this.sec_meio_ambiente.coleta_seletiva.valor) * 1.1; //-
+                taxa /= (this.sec_meio_ambiente.bioma_nativo.valor) * 1.1; //-
+                taxa /= (this.sec_meio_ambiente.licencas.valor); //-
+
+                if (taxa >= 0){
+                    return Math.round(this.prefeitura.população.valor * (taxa / 100000));
+                }
+                return 0;
+            }
+
+        }
 
         function game() {
             const nomePais1 = document.getElementById('nomePais1').value;
             const nomePais2 = document.getElementById('nomePais2').value;
-            const nomePais3 = document.getElementById('nomePais1').value;
-            const nomePais4 = document.getElementById('nomePais2').value;
+            const nomePais3 = document.getElementById('nomePais3').value;
+            const nomePais4 = document.getElementById('nomePais4').value;
 
-            paises.push(new Pais(nomePais1));
-            paises.push(new Pais(nomePais2));
-            paises.push(new Pais(nomePais3));
-            paises.push(new Pais(nomePais4));
-            mostrarPaises()
+            if (nomePais1) paises.push(new Pais(nomePais1));
+            if (nomePais2) paises.push(new Pais(nomePais2));
+            if (nomePais3) paises.push(new Pais(nomePais3));
+            if (nomePais4) paises.push(new Pais(nomePais4));
+
+            saveVariables(paises);
+            mostrarPaises();
         }
 
-        function pais(pais) {
+        function pais(index) {
+            const dadosContainer = document.getElementById('dadosContainer');
             dadosContainer.innerHTML = `
-                <h1>${paises[pais].name}</h1>
-                <h2>${paises[pais].rate()}</h2>
-                <button onclick="manageEscola(${pais})">escola</button></br>
-                <button onclick="manageAcademia(${pais})">academia</button></br>
-                <button onclick="managePrefeitura(${pais})">prefeitua</button></br>
-                <button onclick="manageAcademia(${pais})">secretaria de meio ambiente</button></br>
-                <button onclick="manageHospital(${pais})">hospital</button></br></br></br>
-                <button onclick="mostrarPaises()">paises</button></br>
-
+                <h1>${paises[index].name}</h1>
+                <h2>Taxa de mortalidade: ${paises[index].rate()}</h2>
+                <button onclick="manageEscola(${index})">Escola</button></br>
+                <button onclick="manageAcademia(${index})">Academia</button></br>
+                <button onclick="managePrefeitura(${index})">Prefeitura</button></br>
+                <button onclick="manageSecMeioAmbiente(${index})">Secretaria de Meio Ambiente</button></br>
+                <button onclick="manageHospital(${index})">Hospital</button></br></br></br>
+                <button onclick="mostrarPaises()">Países</button></br>
             `;
         }
 
-        function manageSecMeioAmbiente(pais) {
+        function manageSecMeioAmbiente(index) {
+            const dadosContainer = document.getElementById('dadosContainer');
             dadosContainer.innerHTML = `
-                <h1>${paises[pais].name}</h1>
-                <h2>${paises[pais].rate()}</h2>
-                <h3>secretaria de meio ambiente</h3>
-                <button onclick="pais(${pais})">voltar</button> 
-                <button onclick="mostrarPaises()">paises</button>
+                <h1>${paises[index].name}</h1>
+                <h2>Taxa de mortalidade: ${paises[index].rate()}</h2>
+                <h3>Secretaria de Meio Ambiente</h3>
+                <button onclick="pais(${index})">Voltar</button>
             `;
-            for(var dado in paises[pais].sec_meio_ambiente){
-                //console.log(dado)
+            for (let dado in paises[index].sec_meio_ambiente) {
                 dadosContainer.innerHTML += `
                 </br>
-                <h4>${dado}: ${paises[pais].sec_meio_ambiente[dado]}</h4>
-                <button onclick="paises[${pais}].plusSecMeioAmbiente('${dado}', 1); manageSecMeioAmbiente(${pais})">-</button>
-                <button onclick="paises[${pais}].plusSecMeioAmbiente('${dado}', 0); manageSecMeioAmbiente(${pais})">+</button>
-            `;
+                <h4>${dado}: ${paises[index].sec_meio_ambiente[dado].valor}</h4>
+                <button onclick="paises[${index}].plusSecMeioAmbiente('${dado}', 1); manageSecMeioAmbiente(${index})">-</button>
+                <button onclick="paises[${index}].plusSecMeioAmbiente('${dado}', 0); manageSecMeioAmbiente(${index})">+</button>
+                `;
             }
         }
 
-        function manageEscola(pais) {
+        function manageHospital(index) {
+            const dadosContainer = document.getElementById('dadosContainer');
             dadosContainer.innerHTML = `
-                <h1>${paises[pais].name}</h1>
-                <h2>${paises[pais].rate()}</h2>
-                <h3>Escola</h3>
-                <button onclick="pais(${pais})">voltar</button> 
-                <button onclick="mostrarPaises()">paises</button>
-            `;
-            for(var dado in paises[pais].escola){
-                //console.log(dado)
-                dadosContainer.innerHTML += `
-                </br>
-                <h4>${dado}: ${paises[pais].escola[dado]}</h4>
-                <button onclick="paises[${pais}].plusEscola('${dado}', 1); manageEscola(${pais})">-</button>
-                <button onclick="paises[${pais}].plusEscola('${dado}', 0); manageEscola(${pais})">+</button>
-            `;
-            }
-        }
-
-        function manageHospital(pais) {
-            dadosContainer.innerHTML = `
-                <h1>${paises[pais].name}</h1>
-                <h2>${paises[pais].rate()}</h2>
+                <h1>${paises[index].name}</h1>
+                <h2>Taxa de mortalidade: ${paises[index].rate()}</h2>
                 <h3>Hospital</h3>
-                <button onclick="pais(${pais})">voltar</button> 
-                <button onclick="mostrarPaises()">paises</button>
+                <button onclick="pais(${index})">Voltar</button>
             `;
-            for(var dado in paises[pais].hospital){
-                //console.log(dado)
+            for (let dado in paises[index].hospital) {
                 dadosContainer.innerHTML += `
                 </br>
-                <h4>${dado}: ${paises[pais].hospital[dado]}</h4>
-                <button onclick="paises[${pais}].plusHospital('${dado}', 1); manageHospital(${pais})">-</button>
-                <button onclick="paises[${pais}].plusHospital('${dado}', 0); manageHospital(${pais})">+</button>
-            `;
+                <h4>${dado}: ${paises[index].hospital[dado].valor}</h4>
+                <button onclick="paises[${index}].plusHospital('${dado}', 1); manageHospital(${index})">-</button>
+                <button onclick="paises[${index}].plusHospital('${dado}', 0); manageHospital(${index})">+</button>
+                `;
             }
         }
 
-        function manageAcademia(pais) {
+        function manageEscola(index) {
+            const dadosContainer = document.getElementById('dadosContainer');
             dadosContainer.innerHTML = `
-                <h1>${paises[pais].name}</h1>
-                <h2>${paises[pais].rate()}</h2>
+                <h1>${paises[index].name}</h1>
+                <h2>Taxa de mortalidade: ${paises[index].rate()}</h3>
+                <h3>Escola</h3>
+                <button onclick="pais(${index})">Voltar</button>
+            `;
+            for (let dado in paises[index].escola) {
+                dadosContainer.innerHTML += `
+                </br>
+                <h4>${dado}: ${paises[index].escola[dado].valor}</h4>
+                <button onclick="paises[${index}].plusEscola('${dado}', 1); manageEscola(${index})">-</button>
+                <button onclick="paises[${index}].plusEscola('${dado}', 0); manageEscola(${index})">+</button>
+                `;
+            }
+        }
+
+        function manageAcademia(index) {
+            const dadosContainer = document.getElementById('dadosContainer');
+            dadosContainer.innerHTML = `
+                <h1>${paises[index].name}</h1>
+                <h2>Taxa de mortalidade: ${paises[index].rate()}</h2>
                 <h3>Academia</h3>
-                <button onclick="pais(${pais})">voltar</button> 
-                <button onclick="mostrarPaises()">paises</button>
+                <button onclick="pais(${index})">Voltar</button>
             `;
-            for(var dado in paises[pais].academia){
-                //console.log(dado)
+            for (let dado in paises[index].academia) {
                 dadosContainer.innerHTML += `
                 </br>
-                <h4>${dado}: ${paises[pais].academia[dado]}</h4>
-                <button onclick="paises[${pais}].plusAcademia('${dado}', 1); manageAcademia(${pais})">-</button>
-                <button onclick="paises[${pais}].plusAcademia('${dado}', 0); manageAcademia(${pais})">+</button>
-            `;
+                <h4>${dado}: ${paises[index].academia[dado].valor}</h4>
+                <button onclick="paises[${index}].plusAcademia('${dado}', 1); manageAcademia(${index})">-</button>
+                <button onclick="paises[${index}].plusAcademia('${dado}', 0); manageAcademia(${index})">+</button>
+                `;
             }
         }
 
-        function managePrefeitura(pais) {
+        function managePrefeitura(index) {
+            const dadosContainer = document.getElementById('dadosContainer');
             dadosContainer.innerHTML = `
-                <h1>${paises[pais].name}</h1>
-                <h2>${paises[pais].rate()}</h2>
+                <h1>${paises[index].name}</h1>
+                <h2>Taxa de mortalidade: ${paises[index].rate()}</h2>
                 <h3>Prefeitura</h3>
-                <button onclick="pais(${pais})">voltar</button> 
-                <button onclick="mostrarPaises()">paises</button>
+                <button onclick="pais(${index})">Voltar</button>
             `;
-            for(var dado in paises[pais].prefeitura){
-                //console.log(dado)
+            for (let dado in paises[index].prefeitura) {
                 dadosContainer.innerHTML += `
                 </br>
-                <h4>${dado}: ${paises[pais].prefeitura[dado]}</h4>
-                <button onclick="paises[${pais}].plusPrefeitura('${dado}', 1); managePrefeitura(${pais})">-</button>
-                <button onclick="paises[${pais}].plusPrefeitura('${dado}', 0); managePrefeitura(${pais})">+</button>
-            `;
+                <h4>${dado}: ${paises[index].prefeitura[dado].valor}</h4>
+                <button onclick="paises[${index}].plusPrefeitura('${dado}', 1); managePrefeitura(${index})">-</button>
+                <button onclick="paises[${index}].plusPrefeitura('${dado}', 0); managePrefeitura(${index})">+</button>
+                `;
             }
         }
 
-        // Função para mostrar os nomes dos órgãos quando clicados
         function mostrarPaises() {
-            dadosContainer.innerHTML = `
-                <button onclick="pais(0)">${paises[0].name}</button> 
-                <button onclick="pais(1)">${paises[1].name}</button> 
-                <button onclick="pais(2)">${paises[2].name}</button> 
-                <button onclick="pais(3)">${paises[3].name}</button>
-            `;
+            const dadosContainer = document.getElementById('dadosContainer');
+            dadosContainer.innerHTML = '';
+            paises.forEach((pais, index) => {
+                dadosContainer.innerHTML += `<button onclick="pais(${index})">${pais.name}</button>`;
+            });
         }
 
+        function saveVariables(paises) {
+            const expires = new Date();
+            expires.setFullYear(expires.getFullYear() + 1);
 
+            paises.forEach((pais, index) => {
+                document.cookie = `pais${index}=${encodeURIComponent(JSON.stringify(pais))};expires=${expires.toUTCString()};path=/`;
+            });
+        }
+
+        function loadVariables() {
+            const cookies = document.cookie.split("; ");
+            cookies.forEach(cookie => {
+                const [key, value] = cookie.split("=");
+                if (key.startsWith("pais")) {
+                    const paisData = JSON.parse(decodeURIComponent(value));
+                    paises.push(new Pais(
+                        paisData.name,
+                        paisData.hospital,
+                        paisData.prefeitura,
+                        paisData.escola,
+                        paisData.academia,
+                        paisData.sec_meio_ambiente
+                    ));
+                }
+            });
+            if (paises.length > 0) {
+                document.getElementById('inputContainer').style.display = 'none';
+                mostrarPaises();
+            }
+        }
+
+        window.onload = loadVariables;
     </script>
 </body>
 </html>
