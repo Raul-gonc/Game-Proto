@@ -240,100 +240,122 @@
                 };
             }
 
-            plusHospital(dado, opcao) {
+            plusHospital(dado, opcao, valor) {
                 const hospital = this.hospital[dado];
                 if (opcao === 0) {
-                    this.hospital[dado].valor = Math.min(hospital.valor + 1, hospital.max);
+                    this.hospital[dado].valor = Math.min(hospital.valor + valor, hospital.max);
                 } else {
-                    this.hospital[dado].valor = Math.max(hospital.valor - 1, hospital.min);
+                    this.hospital[dado].valor = Math.max(hospital.valor - valor, hospital.min);
                 }
             }
 
-            plusPrefeitura(dado, opcao) {
+            plusPrefeitura(dado, opcao, valor) {
                 const prefeitura = this.prefeitura[dado];
                 if (opcao === 0) {
-                    this.prefeitura[dado].valor = Math.min(prefeitura.valor + 1, prefeitura.max);
+                    this.prefeitura[dado].valor = Math.min(prefeitura.valor + valor, prefeitura.max);
                 } else {
-                    this.prefeitura[dado].valor = Math.max(prefeitura.valor - 1, prefeitura.min);
+                    this.prefeitura[dado].valor = Math.max(prefeitura.valor - valor, prefeitura.min);
                 }
             }
 
-            plusEscola(dado, opcao) {
+            plusEscola(dado, opcao, valor) {
                 const escola = this.escola[dado];
                 if (opcao === 0) {
-                    this.escola[dado].valor = Math.min(escola.valor + 1, escola.max);
+                    this.escola[dado].valor = Math.min(escola.valor + valor, escola.max);
                 } else {
-                    this.escola[dado].valor = Math.max(escola.valor - 1, escola.min);
+                    this.escola[dado].valor = Math.max(escola.valor - valor, escola.min);
                 }
             }
 
-            plusAcademia(dado, opcao) {
+            plusAcademia(dado, opcao, valor) {
                 const academia = this.academia[dado];
                 if (opcao === 0) {
-                    this.academia[dado].valor = Math.min(academia.valor + 1, academia.max);
+                    this.academia[dado].valor = Math.min(academia.valor + valor, academia.max);
                 } else {
-                    this.academia[dado].valor = Math.max(academia.valor - 1, academia.min);
+                    this.academia[dado].valor = Math.max(academia.valor - valor, academia.min);
                 }
             }
 
-            plusSecMeioAmbiente(dado, opcao) {
+            plusSecMeioAmbiente(dado, opcao, valor) {
                 const secMeioAmbiente = this.sec_meio_ambiente[dado];
                 if (opcao === 0) {
-                    this.sec_meio_ambiente[dado].valor = Math.min(secMeioAmbiente.valor + 1, secMeioAmbiente.max);
+                    this.sec_meio_ambiente[dado].valor = Math.min(secMeioAmbiente.valor + valor, secMeioAmbiente.max);
                 } else {
-                    this.sec_meio_ambiente[dado].valor = Math.max(secMeioAmbiente.valor - 1, secMeioAmbiente.min);
+                    this.sec_meio_ambiente[dado].valor = Math.max(secMeioAmbiente.valor - valor, secMeioAmbiente.min);
                 }
             }
+
 
             rate() {
                 let taxa = 1;
 
+                // Função para aplicar maior impacto se valor ultrapassar o limiar
+                function impactoCalc(dados, factor) {
+                    const critico = dados.min + 0.75 * (dados.max - dados.min);
+                    if (dados.valor > critico) {
+                        return ((dados.valor ) ** factor);
+                    } else {
+                        return (dados.valor);
+                    }
+    }
+
                 // Escola (Educação)
-                taxa /= (this.escola.ensino_medio.valor) * 1.1; //-
-                taxa /= (this.escola.acesso_internet.valor); //-
-                taxa *= (this.escola.analfabetismo.valor) * 1.1; //+
-                taxa *= (this.escola.evasao.valor); //+
-                taxa *= (this.escola.baixo_rendimento.valor); //+
+                console.log(taxa)
+                taxa /= impactoCalc(this.escola.ensino_medio, 1.5) * 1.1;
+                taxa /= impactoCalc(this.escola.acesso_internet, 1.5);
+                taxa *= impactoCalc(this.escola.analfabetismo, 1.5) * 1.1;
+                taxa *= impactoCalc(this.escola.evasao, 1.5);
+                taxa *= impactoCalc(this.escola.baixo_rendimento, 1.52);
 
+                console.log(taxa)
                 // Hospital (Saúde)
-                taxa *= (this.hospital.tabagismo.valor) * 1.1; //+
-                taxa *= (this.hospital.hipertensao.valor) * 1.1; //+
-                taxa *= (this.hospital.doencas_respiratorias.valor) * 1.1; //+
-                taxa *= (this.hospital.diabetes.valor) * 1.1; //+
-                taxa /= (this.hospital.vacinacao.valor) * 1.1; //+
-                taxa *= (this.hospital.alcolismo.valor) * 1.1; //+
-                taxa *= (this.hospital.mental.valor); //+
-                taxa *= (this.hospital.n_internacoes.valor); //+
-                taxa /= (this.hospital.n_leitos.valor); //-
+                taxa *= impactoCalc(this.hospital.tabagismo, 1.52) * 1.1;
+                taxa *= impactoCalc(this.hospital.hipertensao, 1.52) * 1.1;
+                taxa *= impactoCalc(this.hospital.doencas_respiratorias, 1.52) * 1.1;
+                taxa *= impactoCalc(this.hospital.diabetes, 1.52) * 1.1;
+                taxa /= impactoCalc(this.hospital.vacinacao, 1.52) * 1.1;
+                taxa *= impactoCalc(this.hospital.alcolismo, 1.52) * 1.1;
+                taxa *= impactoCalc(this.hospital.mental, 1.52);
+                taxa *= impactoCalc(this.hospital.n_internacoes, 1.52);
+                taxa /= impactoCalc(this.hospital.n_leitos, 1.52);
 
+                console.log(taxa)
                 // Prefeitura (Economia)
-                taxa *= (this.prefeitura.idade_media.valor); //+
-                taxa /= (this.prefeitura.renda_media.valor); //-
-                taxa *= (this.prefeitura.idh.valor) * 1.1; //+
-                taxa *= (this.prefeitura.pobreza.valor) * 1.1; //+
-                taxa *= (this.prefeitura.desemprego.valor); //+
+                taxa *= impactoCalc(this.prefeitura.idade_media, 1.52);
+                taxa /= impactoCalc(this.prefeitura.renda_media, 1.52);
+                taxa *= impactoCalc(this.prefeitura.idh, 1.52) * 1.1;
+                taxa *= impactoCalc(this.prefeitura.pobreza, 1.52) * 1.1;
+                taxa *= impactoCalc(this.prefeitura.desemprego, 1.52);
                 // mortes += (100 - this.prefeitura.população.valor);
 
+                console.log(taxa)
                 // Academia
-                taxa *= (this.academia.obesidade.valor); //+
-                taxa *= (this.academia.sedentarismo.valor); //+
-                taxa /= (this.academia.alimentacao_saudavel.valor); //-
+                taxa *= impactoCalc(this.academia.obesidade, 1.52);
+                taxa *= impactoCalc(this.academia.sedentarismo, 1.52);
+                taxa /= impactoCalc(this.academia.alimentacao_saudavel, 1.52);
 
+                console.log(taxa)
                 // Secretaria de Meio Ambiente (Ambiente)
-                taxa /= (this.sec_meio_ambiente.saneamento.valor) * 1.1; //-
-                taxa /= (this.sec_meio_ambiente.residuos.valor) * 1.1; //-
-                taxa /= (this.sec_meio_ambiente.un_conservacao.valor) * 1.1; //-
-                taxa /= (this.sec_meio_ambiente.qualida_aqua.valor) * 1.1; //-
-                taxa /= (this.sec_meio_ambiente.qualidade_ar.valor) * 1.1; //-
-                taxa /= (this.sec_meio_ambiente.coleta_seletiva.valor) * 1.1; //-
-                taxa /= (this.sec_meio_ambiente.bioma_nativo.valor) * 1.1; //-
-                taxa /= (this.sec_meio_ambiente.licencas.valor); //-
+                taxa /= impactoCalc(this.sec_meio_ambiente.saneamento, 1.52) * 1.1;
+                taxa /= impactoCalc(this.sec_meio_ambiente.residuos, 1.52) * 1.1;
+                taxa /= impactoCalc(this.sec_meio_ambiente.un_conservacao, 1.5) * 1.1;
+                taxa /= impactoCalc(this.sec_meio_ambiente.qualida_aqua, 1.52) * 1.1;
+                taxa /= impactoCalc(this.sec_meio_ambiente.qualidade_ar, 1.52) * 1.1;
+                taxa /= impactoCalc(this.sec_meio_ambiente.coleta_seletiva, 1.52) * 1.1;
+                taxa /= impactoCalc(this.sec_meio_ambiente.bioma_nativo, 1.52) * 1.1;
+                taxa /= impactoCalc(this.sec_meio_ambiente.licencas, 1.52);
 
-                if (taxa >= 0){
-                    return Math.round(this.prefeitura.população.valor * (taxa / 100000));
+                console.log(taxa)
+                if (taxa >= 0) {
+                    let mortes = Math.round(this.prefeitura.população.valor * (taxa / 10000))
+                    if(mortes <= this.prefeitura.população.valor){
+                        return mortes;
+                    }else{return this.prefeitura.população.valor;}
+            
                 }
-                return 0;
+                return 110;
             }
+
 
         }
 
@@ -378,8 +400,8 @@
                 dadosContainer.innerHTML += `
                 </br>
                 <h4>${dado}: ${paises[index].sec_meio_ambiente[dado].valor}</h4>
-                <button onclick="paises[${index}].plusSecMeioAmbiente('${dado}', 1); manageSecMeioAmbiente(${index})">-</button>
-                <button onclick="paises[${index}].plusSecMeioAmbiente('${dado}', 0); manageSecMeioAmbiente(${index})">+</button>
+                <button onclick="paises[${index}].plusSecMeioAmbiente('${dado}', 1, 1); manageSecMeioAmbiente(${index})">-</button>
+                <button onclick="paises[${index}].plusSecMeioAmbiente('${dado}', 0, 1); manageSecMeioAmbiente(${index})">+</button>
                 `;
             }
         }
@@ -396,8 +418,8 @@
                 dadosContainer.innerHTML += `
                 </br>
                 <h4>${dado}: ${paises[index].hospital[dado].valor}</h4>
-                <button onclick="paises[${index}].plusHospital('${dado}', 1); manageHospital(${index})">-</button>
-                <button onclick="paises[${index}].plusHospital('${dado}', 0); manageHospital(${index})">+</button>
+                <button onclick="paises[${index}].plusHospital('${dado}', 1, 1); manageHospital(${index})">-</button>
+                <button onclick="paises[${index}].plusHospital('${dado}', 0, 1); manageHospital(${index})">+</button>
                 `;
             }
         }
@@ -414,8 +436,8 @@
                 dadosContainer.innerHTML += `
                 </br>
                 <h4>${dado}: ${paises[index].escola[dado].valor}</h4>
-                <button onclick="paises[${index}].plusEscola('${dado}', 1); manageEscola(${index})">-</button>
-                <button onclick="paises[${index}].plusEscola('${dado}', 0); manageEscola(${index})">+</button>
+                <button onclick="paises[${index}].plusEscola('${dado}', 1, 1); manageEscola(${index})">-</button>
+                <button onclick="paises[${index}].plusEscola('${dado}', 0, 1); manageEscola(${index})">+</button>
                 `;
             }
         }
@@ -432,8 +454,8 @@
                 dadosContainer.innerHTML += `
                 </br>
                 <h4>${dado}: ${paises[index].academia[dado].valor}</h4>
-                <button onclick="paises[${index}].plusAcademia('${dado}', 1); manageAcademia(${index})">-</button>
-                <button onclick="paises[${index}].plusAcademia('${dado}', 0); manageAcademia(${index})">+</button>
+                <button onclick="paises[${index}].plusAcademia('${dado}', 1, 1); manageAcademia(${index})">-</button>
+                <button onclick="paises[${index}].plusAcademia('${dado}', 0, 1); manageAcademia(${index})">+</button>
                 `;
             }
         }
@@ -450,8 +472,8 @@
                 dadosContainer.innerHTML += `
                 </br>
                 <h4>${dado}: ${paises[index].prefeitura[dado].valor}</h4>
-                <button onclick="paises[${index}].plusPrefeitura('${dado}', 1); managePrefeitura(${index})">-</button>
-                <button onclick="paises[${index}].plusPrefeitura('${dado}', 0); managePrefeitura(${index})">+</button>
+                <button onclick="paises[${index}].plusPrefeitura('${dado}', 1, 1); managePrefeitura(${index})">-</button>
+                <button onclick="paises[${index}].plusPrefeitura('${dado}', 0, 1); managePrefeitura(${index})">+</button>
                 `;
             }
         }
