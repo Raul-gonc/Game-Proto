@@ -1,3 +1,4 @@
+import ground from "./lib/ground.js";
 const config = {
   type: Phaser.AUTO,
   scale: {
@@ -5,7 +6,14 @@ const config = {
     parent: "game",
     autoCenter: Phaser.Scale.CENTER_BOTH,
   },
-  scene: [],
+  scene: [ground],
+  // physics: {
+  //   default: "arcade",
+  //   arcade: {
+  //     gravity: { y: 300 },
+  //     debug: true,
+  //   },
+  // },
 };
 
 const game = new Phaser.Game(config);
