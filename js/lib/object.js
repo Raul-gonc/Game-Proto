@@ -1,13 +1,11 @@
-export default class Escola extends Phaser.GameObjects.GameObject {
-  constructor(scene, width, height, scale) {
+export default class Componete extends Phaser.GameObjects.GameObject {
+  constructor(scene, width, height, name_frame) {
     super(scene, "sprite");
-    this.scene = scene;
-    this.escola = scene.add
-      .image(width - 281, height + 284, "escola")
+    return scene.add
+      .image(width, height, name_frame)
       .setInteractive()
       .on("pointerdown", function (pointer, localX, localY, event) {
-        console.log("Teste");
+        scene.scene.launch("menu", { value: 1 });
       });
-    this.escola.setScale(scale);
   }
 }

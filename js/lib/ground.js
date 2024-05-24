@@ -1,4 +1,4 @@
-import Escola from "./object.js";
+import Componete from "./object.js";
 
 export default class Ground extends Phaser.Scene {
   constructor() {
@@ -9,20 +9,33 @@ export default class Ground extends Phaser.Scene {
     this.load.image("ground", "./content/ground.png");
     this.load.image("structures", "./content/structures.png");
     this.load.image("escola", "./content/sprites/escola.png");
+    this.load.image("prefeitura", "./content/sprites/prefeitura.png");
   }
 
   create() {
-    const width = this.sys.canvas.width / 2;
-    const height = this.sys.canvas.height / 2;
-    const ground = this.add.image(width, height, "ground");
-    const structues = this.add.image(width, height, "structures");
-    const scale = 1.4;
-    const values = [ground, structues];
-    values.forEach(function (value) {
-      value.setScale(scale);
-    });
-    this.escola = new Escola(this, width, height, scale);
+    this.width = this.sys.canvas.width / 2;
+    this.height = this.sys.canvas.height / 2;
+
+    this.ground = this.add.image(this.width, this.height, "ground");
+    this.structues = this.add.image(this.width, this.height, "structures");
+
+    const values = [this.ground, this.structues];
+
+    this.escola = new Componete(
+      this,
+      this.width-200,
+      this.height + 200,
+      "escola"
+    );
+
+    this.prefeitura = new Componete(
+      this,
+      this.width+9,
+      this.height-40,
+      "prefeitura"
+    );
   }
 
-  update() {}
+  update() {
+  }
 }
