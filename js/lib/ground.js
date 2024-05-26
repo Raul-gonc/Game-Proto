@@ -20,19 +20,20 @@ export default class Ground extends Phaser.Scene {
     this.structues = this.add.image(this.width, this.height, "structures");
 
     const values = [this.ground, this.structues];
-
     this.escola = new Componete(
       this,
-      this.width-200,
+      this.width - 200,
       this.height + 200,
-      "escola"
+      "escola",
+      { "Ensino Médio": 0 }
     );
 
     this.prefeitura = new Componete(
       this,
-      this.width+9,
-      this.height-40,
-      "prefeitura"
+      this.width + 9,
+      this.height - 40,
+      "prefeitura",
+      { "Media Idade População": 0 ,"Proporção Homens e Mulheres":0,"Mulheres gravidas":0}
     );
   }
 
