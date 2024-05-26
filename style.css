@@ -1,21 +1,125 @@
-body{
-    font-family: Nunito, sans-serif;
-    color: #000000;
-    background-color: #e3e3e3;
+/* Reset básico para remover margens e paddings padrão */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-input{
-    width: 50%;
-    text-align: left;
-    border-top: #000000;
-    border-radius: 15px
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+    padding: 20px;
 }
 
-button{
-    color: #ffffff;
-    text-decoration: none;
-    padding: 10px 30px;
-    background-color: #000000;
-    font-size: .9em;
-    border-radius: 15px;
+#dadosContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+#inputContainer {
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+input[type="text"] {
+    padding: 10px;
+    font-size: 50px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    padding: 10px 20px; /* Ajusta o espaçamento interno horizontal */
+    font-size: 50px; /* Reduz o tamanho da fonte */
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    width: auto; /* Permite que os botões tenham largura automática */
+    margin-bottom: 10px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+h1, h2, h3, h4 {
+    margin-bottom: 10px;
+}
+
+h2{
+    font-size: 45px;
+}
+h1{
+    font-size: 52px;
+}
+h3{
+    font-size: 40px;
+}
+
+.btn-menu-pais{
+    width: 100%;
+}
+
+.menu button {
+    width: 100%;
+}
+
+.dado-buttons {
+    display: flex;
+    justify-content: space-between; /* Alinha os itens com espaço entre eles */
+    align-items: center; /* Centraliza verticalmente os itens */
+    border: 1px solid #ccc; /* Adiciona uma borda */
+    padding: 10px; /* Adiciona um espaçamento interno */
+    width: 100%; /* Define largura total */
+}
+
+.dado-buttons button {
+    font-size: 40px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.dado-buttons button:hover {
+    background-color: #0056b3;
+}
+
+.dado-buttons button:first-child {
+    background-color: #dc3545;
+}
+
+.dado-buttons button:first-child:hover {
+    background-color: #c82333;
+}
+
+@media (max-width: 768px) {
+    body {
+        padding: 20px;
+    }
+
+    #dadosContainer {
+        width: 100%;
+        padding: 15px;
+    }
+
+    button {
+        padding: 12px;
+        font-size: 40px;
+    }
+
+    .dado-buttons button {
+        padding: 8px;
+        font-size: 40px;
+    }
 }

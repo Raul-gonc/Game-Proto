@@ -4,17 +4,18 @@
     <meta charset="UTF-8">
     <title>Países</title>
     <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
     
 
     <div id="dadosContainer">
         <div id="inputContainer">
-            <input type="text" id="nomePais1" placeholder="Nome do País 1">
-            <input type="text" id="nomePais2" placeholder="Nome do País 2">
-            <input type="text" id="nomePais3" placeholder="Nome do País 3">
-            <input type="text" id="nomePais4" placeholder="Nome do País 4">
-            <button onclick="game()">Adicionar Países</button>
+            <input type="text" id="nomePais1" placeholder="País 1">
+            <input type="text" id="nomePais2" placeholder="País 2">
+            <input type="text" id="nomePais3" placeholder="País 3">
+            <input type="text" id="nomePais4" placeholder="País 4">
+            <button onclick="game()">Jogar</button>
         </div>
     </div>
 
@@ -52,18 +53,23 @@
                     },
                     jovens: { 
                         valor: 402, 
-                        min: 1, 
-                        max: 100 
+                        min: 10, 
+                        max: 1000 
                     },
                     adultos: { 
                         valor: 505, 
-                        min: 1, 
-                        max: 100 
+                        min: 10, 
+                        max: 1000 
                     },
                     idosos: { 
                         valor: 93, 
+                        min: 10, 
+                        max: 1000 
+                    },
+                    professores: { 
+                        valor: 31, 
                         min: 1, 
-                        max: 100 
+                        max: 31 
                     }
                 };
 
@@ -322,7 +328,7 @@
                 console.log(taxa)
                 // Prefeitura (Economia)
                 taxa *= impactoCalc(this.prefeitura.idade_media, 1.52);
-                taxa /= impactoCalc(this.prefeitura.renda_media, 1.52);
+                taxa /= impactoCalc(this.prefeitura.renda_media, 1.52)*500;
                 taxa *= impactoCalc(this.prefeitura.idh, 1.52) * 1.1;
                 taxa *= impactoCalc(this.prefeitura.pobreza, 1.52) * 1.1;
                 taxa *= impactoCalc(this.prefeitura.desemprego, 1.52);
@@ -353,7 +359,7 @@
                     }else{return this.prefeitura.população.valor;}
             
                 }
-                return 110;
+                return 0;
             }
 
 
@@ -379,12 +385,15 @@
             dadosContainer.innerHTML = `
                 <h1>${paises[index].name}</h1>
                 <h2>Taxa de mortalidade: ${paises[index].rate()}</h2>
-                <button onclick="manageEscola(${index})">Escola</button></br>
-                <button onclick="manageAcademia(${index})">Academia</button></br>
-                <button onclick="managePrefeitura(${index})">Prefeitura</button></br>
-                <button onclick="manageSecMeioAmbiente(${index})">Secretaria de Meio Ambiente</button></br>
-                <button onclick="manageHospital(${index})">Hospital</button></br></br></br>
-                <button onclick="mostrarPaises()">Países</button></br>
+                <div class="menu">
+                    <button onclick="manageEscola(${index})"><i class="fas fa-book"></i>  Escola</button></br>
+                    <button onclick="manageAcademia(${index})"><i class="fas fa-dumbbell"></i>  Academia</button></br>
+                    <button onclick="managePrefeitura(${index})"><i class="fas fa-landmark"></i>  Prefeitura</button></br>
+                    <button onclick="manageSecMeioAmbiente(${index})"><i class="fas fa-leaf"></i>  Secretaria de Meio Ambiente</button></br>
+                    <button onclick="manageHospital(${index})"><i class="fas fa-hospital"></i>  Hospital</button></br></br></br>
+                    <button onclick="mostrarPaises()"><i class="fas fa-globe-americas"></i>  Países</button></br>
+                </div>
+                
             `;
         }
 
@@ -392,98 +401,401 @@
             const dadosContainer = document.getElementById('dadosContainer');
             dadosContainer.innerHTML = `
                 <h1>${paises[index].name}</h1>
-                <h2>Taxa de mortalidade: ${paises[index].rate()}</h2>
-                <h3>Secretaria de Meio Ambiente</h3>
-                <button onclick="pais(${index})">Voltar</button>
-            `;
-            for (let dado in paises[index].sec_meio_ambiente) {
-                dadosContainer.innerHTML += `
+                <h2><i class="fas fa-leaf"></i>  Secretaria de Meio Ambiente</h2>
+                <h3>Taxa de mortalidade: ${paises[index].rate()}</h3>
+                
+                <button onclick="pais(${index})"><i class="fas fa-arrow-left"></i>  Voltar</button>
+
+
                 </br>
-                <h4>${dado}: ${paises[index].sec_meio_ambiente[dado].valor}</h4>
-                <button onclick="paises[${index}].plusSecMeioAmbiente('${dado}', 1, 1); manageSecMeioAmbiente(${index})">-</button>
-                <button onclick="paises[${index}].plusSecMeioAmbiente('${dado}', 0, 1); manageSecMeioAmbiente(${index})">+</button>
-                `;
-            }
+                <div class="dado-buttons">
+                    <button onclick="paises[${index}].plusSecMeioAmbiente('saneamento', 1, 1); manageSecMeioAmbiente(${index})">-</button>
+                    <h2>Saneamento básico: ${paises[index].sec_meio_ambiente["saneamento"].valor}%</h2>
+
+                    <button onclick="paises[${index}].plusSecMeioAmbiente('saneamento', 0, 1); manageSecMeioAmbiente(${index})">+</button>
+                </div>
+
+
+                </br>
+                <div class="dado-buttons">
+                    <button onclick="paises[${index}].plusSecMeioAmbiente('residuos', 1, 1); manageSecMeioAmbiente(${index})">-</button>
+                    <h2>Tratamento de resíduos: ${paises[index].sec_meio_ambiente["residuos"].valor}%</h2>
+
+                    <button onclick="paises[${index}].plusSecMeioAmbiente('residuos', 0, 1); manageSecMeioAmbiente(${index})">+</button>
+                </div>
+
+            </br>
+                <div class="dado-buttons">
+                    <button onclick="paises[${index}].plusSecMeioAmbiente('un_conservacao', 1, 1); manageSecMeioAmbiente(${index})">-</button>
+                    <h2>Unidades de conservação: ${paises[index].sec_meio_ambiente["un_conservacao"].valor}</h2>
+
+                    <button onclick="paises[${index}].plusSecMeioAmbiente('un_conservacao', 0, 1); manageSecMeioAmbiente(${index})">+</button>
+                </div>
+
+            </br>
+                <div class="dado-buttons">
+                    <button onclick="paises[${index}].plusSecMeioAmbiente('qualida_aqua', 1, 1); manageSecMeioAmbiente(${index})">-</button>
+                    <h2>Qualidade da água: ${paises[index].sec_meio_ambiente["qualida_aqua"].valor}%</h2>
+
+                    <button onclick="paises[${index}].plusSecMeioAmbiente('qualida_aqua', 0, 1); manageSecMeioAmbiente(${index})">+</button>
+                </div>
+
+            </br>
+                <div class="dado-buttons">
+                    <button onclick="paises[${index}].plusSecMeioAmbiente('qualidade_ar', 1, 1); manageSecMeioAmbiente(${index})">-</button>
+                    <h2>Qualidade da ar: ${paises[index].sec_meio_ambiente["qualidade_ar"].valor}%</h2>
+
+                    <button onclick="paises[${index}].plusSecMeioAmbiente('qualidade_ar', 0, 1); manageSecMeioAmbiente(${index})">+</button>
+                </div>
+
+            </br>
+                <div class="dado-buttons">
+                    <button onclick="paises[${index}].plusSecMeioAmbiente('coleta_seletiva', 1, 1); manageSecMeioAmbiente(${index})">-</button>
+                    <h2>Coleta seletiva : ${paises[index].sec_meio_ambiente["coleta_seletiva"].valor}%</h2>
+
+                    <button onclick="paises[${index}].plusSecMeioAmbiente('coleta_seletiva', 0, 1); manageSecMeioAmbiente(${index})">+</button>
+                </div>
+
+            </br>
+                <div class="dado-buttons">
+                    <button onclick="paises[${index}].plusSecMeioAmbiente('bioma_nativo', 1, 1); manageSecMeioAmbiente(${index})">-</button>
+                    <h2>Conservação do bioma nativo: ${paises[index].sec_meio_ambiente["bioma_nativo"].valor}%</h2>
+
+                    <button onclick="paises[${index}].plusSecMeioAmbiente('bioma_nativo', 0, 1); manageSecMeioAmbiente(${index})">+</button>
+                </div>
+
+            </br>
+                <div class="dado-buttons">
+                    <button onclick="paises[${index}].plusSecMeioAmbiente('licencas', 1, 1); manageSecMeioAmbiente(${index})">-</button>
+                    <h2>Licenças ambientais: ${paises[index].sec_meio_ambiente["licencas"].valor}</h2>
+
+                    <button onclick="paises[${index}].plusSecMeioAmbiente('licencas', 0, 1); manageSecMeioAmbiente(${index})">+</button>
+                </div>
+
+            `;
         }
 
         function manageHospital(index) {
             const dadosContainer = document.getElementById('dadosContainer');
             dadosContainer.innerHTML = `
                 <h1>${paises[index].name}</h1>
-                <h2>Taxa de mortalidade: ${paises[index].rate()}</h2>
-                <h3>Hospital</h3>
-                <button onclick="pais(${index})">Voltar</button>
-            `;
-            for (let dado in paises[index].hospital) {
-                dadosContainer.innerHTML += `
+                <h2><i class="fas fa-hospital"></i>  Hospital</h2>
+                <h3>Taxa de mortalidade: ${paises[index].rate()}</h3>
+                
+                <button onclick="pais(${index})"><i class="fas fa-arrow-left"></i>  Voltar</button>
+
+
                 </br>
-                <h4>${dado}: ${paises[index].hospital[dado].valor}</h4>
-                <button onclick="paises[${index}].plusHospital('${dado}', 1, 1); manageHospital(${index})">-</button>
-                <button onclick="paises[${index}].plusHospital('${dado}', 0, 1); manageHospital(${index})">+</button>
-                `;
-            }
+                <div class="dado-buttons">
+                    <button onclick="paises[${index}].plusHospital('tabagismo', 1, 1); manageHospital(${index})">-</button>
+                    <h2>Tabagismo: ${paises[index].hospital["tabagismo"].valor}%</h2>
+
+                    <button onclick="paises[${index}].plusHospital('tabagismo', 0, 1); manageHospital(${index})">+</button>
+                </div>
+
+            </br>
+                <div class="dado-buttons">
+                    <button onclick="paises[${index}].plusHospital('hipertensao', 1, 1); manageHospital(${index})">-</button>
+                    <h2>Hipertensão: ${paises[index].hospital["hipertensao"].valor}%</h2>
+
+                    <button onclick="paises[${index}].plusHospital('hipertensao', 0, 1); manageHospital(${index})">+</button>
+                </div>
+
+            </br>
+                <div class="dado-buttons">
+                    <button onclick="paises[${index}].plusHospital('doencas_respiratorias', 1, 1); manageHospital(${index})">-</button>
+                    <h2>Doenças respiratórias: ${paises[index].hospital["doencas_respiratorias"].valor}%</h2>
+
+                    <button onclick="paises[${index}].plusHospital('doencas_respiratorias', 0, 1); manageHospital(${index})">+</button>
+                </div>
+
+            </br>
+                <div class="dado-buttons">
+                    <button onclick="paises[${index}].plusHospital('diabetes', 1, 1); manageHospital(${index})">-</button>
+                    <h2>Diabetes: ${paises[index].hospital["diabetes"].valor}%</h2>
+
+                    <button onclick="paises[${index}].plusHospital('diabetes', 0, 1); manageHospital(${index})">+</button>
+                </div>
+
+            </br>
+                <div class="dado-buttons">
+                    <button onclick="paises[${index}].plusHospital('vacinacao', 1, 1); manageHospital(${index})">-</button>
+                    <h2>Taxa de vacinação: ${paises[index].hospital["vacinacao"].valor}%</h2>
+
+                    <button onclick="paises[${index}].plusHospital('vacinacao', 0, 1); manageHospital(${index})">+</button>
+                </div>
+
+            </br>
+                <div class="dado-buttons">
+                    <button onclick="paises[${index}].plusHospital('alcolismo', 1, 1); manageHospital(${index})">-</button>
+                    <h2>Alcoolismo: ${paises[index].hospital["alcolismo"].valor}%</h2>
+
+                    <button onclick="paises[${index}].plusHospital('alcolismo', 0, 1); manageHospital(${index})">+</button>
+                </div>
+
+            </br>
+                <div class="dado-buttons">
+                    <button onclick="paises[${index}].plusHospital('mental', 1, 1); manageHospital(${index})">-</button>
+                    <h2>Saúde mental: ${paises[index].hospital["mental"].valor}%</h2>
+
+                    <button onclick="paises[${index}].plusHospital('mental', 0, 1); manageHospital(${index})">+</button>
+                </div>
+
+            </br>
+                <div class="dado-buttons">
+                    <button onclick="paises[${index}].plusHospital('n_internacoes', 1, 1); manageHospital(${index})">-</button>
+                    <h2>Nº de internações: ${paises[index].hospital["n_internacoes"].valor}</h2>
+
+                    <button onclick="paises[${index}].plusHospital('n_internacoes', 0, 1); manageHospital(${index})">+</button>
+                </div>
+
+            </br>
+                <div class="dado-buttons">
+                    <button onclick="paises[${index}].plusHospital('n_nascimentos', 1, 0.1); manageHospital(${index})">-</button>
+                    <h2>Nº de nascimentos: ${paises[index].hospital["n_nascimentos"].valor}</h2>
+
+                    <button onclick="paises[${index}].plusHospital('n_nascimentos', 0, 0.1); manageHospital(${index})">+</button>
+                </div>
+
+            </br>
+                <div class="dado-buttons">
+                    <button onclick="paises[${index}].plusHospital('expectativa_de_vida', 1, 0.5); manageHospital(${index})">-</button>
+                    <h2>Expectativa de vida: ${paises[index].hospital['expectativa_de_vida'].valor}</h2>
+
+                    <button onclick="paises[${index}].plusHospital('expectativa_de_vida', 0, 0.5); manageHospital(${index})">+</button>
+                </div>
+
+            </br>
+                <div class="dado-buttons">
+                    <button onclick="paises[${index}].plusHospital('n_leitos', 1, 1); manageHospital(${index})">-</button>
+                    <h2>Nº de leitos hospitalares: ${paises[index].hospital["n_leitos"].valor}</h2>
+
+                    <button onclick="paises[${index}].plusHospital('n_leitos', 0, 1); manageHospital(${index})">+</button>
+                </div>
+            `;
+            
         }
 
         function manageEscola(index) {
             const dadosContainer = document.getElementById('dadosContainer');
             dadosContainer.innerHTML = `
                 <h1>${paises[index].name}</h1>
-                <h2>Taxa de mortalidade: ${paises[index].rate()}</h3>
-                <h3>Escola</h3>
-                <button onclick="pais(${index})">Voltar</button>
+                <h2><i class="fas fa-book"></i>  Escola</h2>
+                <h3>Taxa de mortalidade: ${paises[index].rate()}</h3>
+                
+                <button onclick="pais(${index})"><i class="fas fa-arrow-left"></i>  Voltar</button>
+
+                    </br>
+                <div class="dado-buttons">
+                    <button onclick="paises[${index}].plusEscola('ensino_medio', 1, 1); manageEscola(${index})">-</button>
+                    <h2>Ensino Médio: ${paises[index].escola["ensino_medio"].valor}%</h2>
+
+                    <button onclick="paises[${index}].plusEscola('ensino_medio', 0, 1); manageEscola(${index})">+</button>
+                </div>
+
+            </br>
+                <div class="dado-buttons">
+                    <button onclick="paises[${index}].plusEscola('acesso_internet', 1, 1); manageEscola(${index})">-</button>
+                    <h2>Acesso a internet: ${paises[index].escola["acesso_internet"].valor}%</h2>
+
+                    <button onclick="paises[${index}].plusEscola('acesso_internet', 0, 1); manageEscola(${index})">+</button>
+                </div>
+
+            </br>
+                <div class="dado-buttons">
+                    <button onclick="paises[${index}].plusEscola('analfabetismo', 1, 1); manageEscola(${index})">-</button>
+                    <h2>Taxa de analfabetismo: ${paises[index].escola['analfabetismo'].valor}%</h2>
+
+                    <button onclick="paises[${index}].plusEscola('analfabetismo', 0, 1); manageEscola(${index})">+</button>
+                </div>
+
+            </br>
+                <div class="dado-buttons">
+                    <button onclick="paises[${index}].plusEscola('evasao', 1, 1); manageEscola(${index})">-</button>
+                    <h2>Evasão escolar: ${paises[index].escola["evasao"].valor}%</h2>
+
+                    <button onclick="paises[${index}].plusEscola('evasao', 0, 1); manageEscola(${index})">+</button>
+                </div>
+
+            </br>
+                <div class="dado-buttons">
+                    <button onclick="paises[${index}].plusEscola('baixo_rendimento', 1, 1); manageEscola(${index})">-</button>
+                    <h2>Baixo rendimento: ${paises[index].escola["baixo_rendimento"].valor}%</h2>
+
+                    <button onclick="paises[${index}].plusEscola('baixo_rendimento', 0, 1); manageEscola(${index})">+</button>
+                </div>
+
+            </br>
+                <div class="dado-buttons">
+                    <button onclick="paises[${index}].plusEscola('jovens', 1, 10);paises[${index}].plusEscola('adultos', 0, 5);paises[${index}].plusEscola('idosos', 0, 5); manageEscola(${index})">-</button>
+                    <h2>Jovens: ${paises[index].escola["jovens"].valor/10} %</h2>
+
+                    <button onclick="paises[${index}].plusEscola('jovens', 0, 10);paises[${index}].plusEscola('adultos', 1, 5);paises[${index}].plusEscola('idosos', 1, 5); manageEscola(${index})">+</button>
+                </div>
+
+            </br>
+                <div class="dado-buttons">
+                    <button onclick="paises[${index}].plusEscola('adultos', 1, 10);paises[${index}].plusEscola('idosos', 0, 5);paises[${index}].plusEscola('jovens', 0, 5); manageEscola(${index})">-</button>
+                    <h2>Adultos: ${paises[index].escola["adultos"].valor/10} %</h2>
+
+                    <button onclick="paises[${index}].plusEscola('adultos', 0, 10);paises[${index}].plusEscola('idosos', 1, 5);paises[${index}].plusEscola('jovens', 1, 5); manageEscola(${index})">+</button>
+                </div>
+
+            </br>
+                <div class="dado-buttons">
+                    <button onclick="paises[${index}].plusEscola('idosos', 1, 10);paises[${index}].plusEscola('adultos', 0, 5);paises[${index}].plusEscola('jovens', 0, 5); manageEscola(${index})">-</button>
+                    <h2>Idosos: ${paises[index].escola["idosos"].valor/10} %</h2>
+
+                    <button onclick="paises[${index}].plusEscola('idosos', 0, 10);paises[${index}].plusEscola('adultos', 1, 5);paises[${index}].plusEscola('jovens', 1, 5); manageEscola(${index})">+</button>
+                </div>
+
+            </br>
+                <div class="dado-buttons">
+                    <button onclick="paises[${index}].plusEscola('professores', 1, 1); manageEscola(${index})">-</button>
+                    <h2>Professores: ${paises[index].escola["professores"].valor}</h2>
+
+                    <button onclick="paises[${index}].plusEscola('professores', 0, 1); manageEscola(${index})">+</button>
+                </div>
             `;
-            for (let dado in paises[index].escola) {
-                dadosContainer.innerHTML += `
-                </br>
-                <h4>${dado}: ${paises[index].escola[dado].valor}</h4>
-                <button onclick="paises[${index}].plusEscola('${dado}', 1, 1); manageEscola(${index})">-</button>
-                <button onclick="paises[${index}].plusEscola('${dado}', 0, 1); manageEscola(${index})">+</button>
-                `;
-            }
+
         }
 
         function manageAcademia(index) {
             const dadosContainer = document.getElementById('dadosContainer');
             dadosContainer.innerHTML = `
                 <h1>${paises[index].name}</h1>
-                <h2>Taxa de mortalidade: ${paises[index].rate()}</h2>
-                <h3>Academia</h3>
-                <button onclick="pais(${index})">Voltar</button>
+                <h2><i class="fas fa-dumbbell"></i>  Academia</h2>
+                <h3>Taxa de mortalidade: ${paises[index].rate()}</h3>
+
+                <button onclick="pais(${index})"><i class="fas fa-arrow-left"></i>  Voltar</button>
+
+            </br>
+                
+                <div class="dado-buttons">
+                    <button onclick="paises[${index}].plusAcademia('frequentadores', 1, 1); manageAcademia(${index})">-</button>
+                    <h2>Nº de frequentadores: ${paises[index].academia['frequentadores'].valor}</h2>
+
+                    <button onclick="paises[${index}].plusAcademia('frequentadores', 0, 1); manageAcademia(${index})">+</button>
+                </div>
+            </br>
+                
+                <div class="dado-buttons">
+                    <button onclick="paises[${index}].plusAcademia('obesidade', 1, 1); manageAcademia(${index})">-</button>
+                    <h2>Obesidade: ${paises[index].academia["obesidade"].valor}%</h2>
+
+                    <button onclick="paises[${index}].plusAcademia('obesidade', 0, 1); manageAcademia(${index})">+</button>
+                </div>
+            </br>
+                
+                <div class="dado-buttons">
+                    <button onclick="paises[${index}].plusAcademia('sedentarismo', 1, 1); manageAcademia(${index})">-</button>
+                    <h2>Sedentarismo: ${paises[index].academia["sedentarismo"].valor}%</h2>
+
+                    <button onclick="paises[${index}].plusAcademia('sedentarismo', 0, 1); manageAcademia(${index})">+</button>
+                </div>
+            </br>
+                
+                <div class="dado-buttons">
+                    <button onclick="paises[${index}].plusAcademia('alimentacao_saudavel', 1, 1); manageAcademia(${index})">-</button>
+                    <h2>Alimentação saudável: ${paises[index].academia["alimentacao_saudavel"].valor}%</h2>
+
+                    <button onclick="paises[${index}].plusAcademia('alimentacao_saudavel', 0, 1); manageAcademia(${index})">+</button>
+                </div>
             `;
-            for (let dado in paises[index].academia) {
-                dadosContainer.innerHTML += `
-                </br>
-                <h4>${dado}: ${paises[index].academia[dado].valor}</h4>
-                <button onclick="paises[${index}].plusAcademia('${dado}', 1, 1); manageAcademia(${index})">-</button>
-                <button onclick="paises[${index}].plusAcademia('${dado}', 0, 1); manageAcademia(${index})">+</button>
-                `;
-            }
+            
         }
 
         function managePrefeitura(index) {
             const dadosContainer = document.getElementById('dadosContainer');
             dadosContainer.innerHTML = `
                 <h1>${paises[index].name}</h1>
-                <h2>Taxa de mortalidade: ${paises[index].rate()}</h2>
-                <h3>Prefeitura</h3>
-                <button onclick="pais(${index})">Voltar</button>
+                <h2><i class="fas fa-landmark"></i>  Prefeitura</h2>
+                <h3>Taxa de mortalidade: ${paises[index].rate()}</h3>
+                
+                <button onclick="pais(${index})"><i class="fas fa-arrow-left"></i>  Voltar</button>
+
+            </br>
+                <div class="dado-buttons">
+                    <button onclick="paises[${index}].plusPrefeitura('idade_media', 1, 1); managePrefeitura(${index})">-</button>
+                    <h2>Média de idade da população: ${paises[index].prefeitura["idade_media"].valor}</h2>
+
+                    <button onclick="paises[${index}].plusPrefeitura('idade_media', 0, 1); managePrefeitura(${index})">+</button>
+                </div>
+
+            </br>
+                <div class="dado-buttons">
+                    <button onclick="paises[${index}].plusPrefeitura('homens', 1, 1); paises[${index}].plusPrefeitura('mulheres', 0, 1); managePrefeitura(${index})">-</button>
+                    <h2>homens: ${paises[index].prefeitura["homens"].valor}%</h2>
+
+                    <button onclick="paises[${index}].plusPrefeitura('homens', 0, 1); paises[${index}].plusPrefeitura('mulheres', 1, 1); managePrefeitura(${index})">+</button>
+                </div>
+
+            </br>
+                <div class="dado-buttons">
+                    <button onclick="paises[${index}].plusPrefeitura('mulheres', 1, 1); paises[${index}].plusPrefeitura('homens', 0, 1); managePrefeitura(${index})">-</button>
+                    <h2>mulheres: ${paises[index].prefeitura["mulheres"].valor}%</h2>
+
+                    <button onclick="paises[${index}].plusPrefeitura('mulheres', 0, 1); paises[${index}].plusPrefeitura('homens', 1, 1); managePrefeitura(${index})">+</button>
+                </div>
+
+            </br>
+                <div class="dado-buttons">
+                    <button onclick="paises[${index}].plusPrefeitura('renda_media', 1, 50); managePrefeitura(${index})">-</button>
+                    <h2>Renda média familiar: ${paises[index].prefeitura["renda_media"].valor}</h2>
+
+                    <button onclick="paises[${index}].plusPrefeitura('renda_media', 0, 50); managePrefeitura(${index})">+</button>
+                </div>
+
+            </br>
+                <div class="dado-buttons">
+                    <button onclick="paises[${index}].plusPrefeitura('idh', 1, 1); managePrefeitura(${index})">-</button>
+                    <h2>IDH: ${paises[index].prefeitura["idh"].valor/1000}</h2>
+
+                    <button onclick="paises[${index}].plusPrefeitura('idh', 0, 1); managePrefeitura(${index})">+</button>
+                </div>
+
+            </br>
+                <div class="dado-buttons">
+                    <button onclick="paises[${index}].plusPrefeitura('pobreza', 1, 1); managePrefeitura(${index})">-</button>
+                    <h2>Extrema pobreza : ${paises[index].prefeitura["pobreza"].valor}%</h2>
+
+                    <button onclick="paises[${index}].plusPrefeitura('pobreza', 0, 1); managePrefeitura(${index})">+</button>
+                </div>
+
+            </br>
+                <div class="dado-buttons">
+                    <button onclick="paises[${index}].plusPrefeitura('desemprego', 1, 1); managePrefeitura(${index})">-</button>
+                    <h2>Desemprego: ${paises[index].prefeitura["desemprego"].valor}%</h2>
+
+                    <button onclick="paises[${index}].plusPrefeitura('desemprego', 0, 1); managePrefeitura(${index})">+</button>
+                </div>
+
+            </br>
+                <div class="dado-buttons">
+                    <button onclick="paises[${index}].plusPrefeitura('população', 1, 1); managePrefeitura(${index})">-</button>
+                    <h2>População: ${paises[index].prefeitura["população"].valor}</h2>
+
+                    <button onclick="paises[${index}].plusPrefeitura('população', 0, 1); managePrefeitura(${index})">+</button>
+                </div>
+
+            </br>
+                <div class="dado-buttons">
+                    <button onclick="paises[${index}].plusPrefeitura('n_vereadores', 1, 1); managePrefeitura(${index})">-</button>
+                    <h2>Nº de vereadores: ${paises[index].prefeitura["n_vereadores"].valor}</h2>
+                    <button onclick="paises[${index}].plusPrefeitura('n_vereadores', 0, 1); managePrefeitura(${index})">+</button>
+                </div>
+
+                
             `;
-            for (let dado in paises[index].prefeitura) {
-                dadosContainer.innerHTML += `
-                </br>
-                <h4>${dado}: ${paises[index].prefeitura[dado].valor}</h4>
-                <button onclick="paises[${index}].plusPrefeitura('${dado}', 1, 1); managePrefeitura(${index})">-</button>
-                <button onclick="paises[${index}].plusPrefeitura('${dado}', 0, 1); managePrefeitura(${index})">+</button>
-                `;
-            }
         }
 
         function mostrarPaises() {
             const dadosContainer = document.getElementById('dadosContainer');
-            dadosContainer.innerHTML = '';
+            dadosContainer.innerHTML = '<h1>Paises</h1>';
             paises.forEach((pais, index) => {
-                dadosContainer.innerHTML += `<button onclick="pais(${index})">${pais.name}</button>`;
+                dadosContainer.innerHTML += `<button class="btn-menu-pais" onclick="pais(${index})">${pais.name}</button>`;
             });
+
         }
 
         function saveVariables(paises) {
