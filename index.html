@@ -10,6 +10,8 @@
     
 
     <div id="dadosContainer">
+        <h1>Jogar</h1>
+        <h2>Nomeie os Paises:</h2>
         <div id="inputContainer">
             <input type="text" id="nomePais1" placeholder="País 1">
             <input type="text" id="nomePais2" placeholder="País 2">
@@ -312,6 +314,8 @@
                 taxa *= impactoCalc(this.escola.analfabetismo, 1.5) * 1.1;
                 taxa *= impactoCalc(this.escola.evasao, 1.5);
                 taxa *= impactoCalc(this.escola.baixo_rendimento, 1.52);
+                taxa *= impactoCalc(this.escola.idosos, 1.52)*1.1;
+                taxa *= impactoCalc(this.escola.adultos, 1.52);
 
                 console.log(taxa)
                 // Hospital (Saúde)
@@ -791,7 +795,7 @@
 
         function mostrarPaises() {
             const dadosContainer = document.getElementById('dadosContainer');
-            dadosContainer.innerHTML = '<h1>Paises</h1>';
+            dadosContainer.innerHTML = '<h1>Paises</h1><button onclick="limparCookies();">reset</button>';
             paises.forEach((pais, index) => {
                 dadosContainer.innerHTML += `<button class="btn-menu-pais" onclick="pais(${index})">${pais.name}</button>`;
             });
@@ -828,6 +832,21 @@
                 mostrarPaises();
             }
         }
+
+        function limparCookies() {
+            var cookies = document.cookie.split(";"); 
+            
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i];
+                var eqPos = cookie.indexOf("="); 
+
+                var nome = eqPos > -1 ? cookie.substr(0, eqPos) : cookie; 
+
+                document.cookie = nome + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT"; 
+            }
+            location.reload();
+        }
+
 
         window.onload = loadVariables;
     </script>
