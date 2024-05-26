@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Países</title>
     <link rel="stylesheet" type="text/css" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
+
 <body>
-    
+
 
     <div id="dadosContainer">
         <h1>Jogar</h1>
@@ -28,222 +30,222 @@
             constructor(name, hospital, prefeitura, escola, academia, sec_meio_ambiente) {
                 this.name = name;
                 this.escola = escola || {
-                    ensino_medio: { 
-                        valor: 48, 
-                        min: 1, 
-                        max: 100 
+                    ensino_medio: {
+                        valor: 48,
+                        min: 1,
+                        max: 100
                     },
-                    acesso_internet: { 
-                        valor: 84, 
-                        min: 1, 
-                        max: 100 
+                    acesso_internet: {
+                        valor: 84,
+                        min: 1,
+                        max: 100
                     },
-                    analfabetismo: { 
-                        valor: 5.8, 
-                        min: 1, 
-                        max: 100 
+                    analfabetismo: {
+                        valor: 5.8,
+                        min: 1,
+                        max: 100
                     },
-                    evasao: { 
-                        valor: 5.9, 
-                        min: 1, 
-                        max: 100 
+                    evasao: {
+                        valor: 5.9,
+                        min: 1,
+                        max: 100
                     },
-                    baixo_rendimento: { 
-                        valor: 59.8, 
-                        min: 1, 
-                        max: 100 
+                    baixo_rendimento: {
+                        valor: 59.8,
+                        min: 1,
+                        max: 100
                     },
-                    jovens: { 
-                        valor: 402, 
-                        min: 10, 
-                        max: 980 
+                    jovens: {
+                        valor: 402,
+                        min: 10,
+                        max: 980
                     },
-                    adultos: { 
-                        valor: 505, 
-                        min: 10, 
-                        max: 980 
+                    adultos: {
+                        valor: 505,
+                        min: 10,
+                        max: 980
                     },
-                    idosos: { 
-                        valor: 93, 
-                        min: 10, 
-                        max: 980 
+                    idosos: {
+                        valor: 93,
+                        min: 10,
+                        max: 980
                     },
-                    professores: { 
-                        valor: 31, 
-                        min: 1, 
-                        max: 31 
+                    professores: {
+                        valor: 31,
+                        min: 1,
+                        max: 31
                     }
                 };
 
                 this.hospital = hospital || {
-                    tabagismo: { 
-                        valor: 10, 
-                        min: 1, 
-                        max: 100 
+                    tabagismo: {
+                        valor: 10,
+                        min: 1,
+                        max: 100
                     },
-                    hipertensao: { 
-                        valor: 26.3, 
-                        min: 1, 
-                        max: 100 
+                    hipertensao: {
+                        valor: 26.3,
+                        min: 1,
+                        max: 100
                     },
-                    doencas_respiratorias: { 
-                        valor: 30, 
-                        min: 1, 
-                        max: 100 
+                    doencas_respiratorias: {
+                        valor: 30,
+                        min: 1,
+                        max: 100
                     },
-                    diabetes: { 
-                        valor: 6.9, 
-                        min: 1, 
-                        max: 100 
+                    diabetes: {
+                        valor: 6.9,
+                        min: 1,
+                        max: 100
                     },
-                    vacinacao: { 
-                        valor: 52.1, 
-                        min: 1, 
-                        max: 100 
+                    vacinacao: {
+                        valor: 52.1,
+                        min: 1,
+                        max: 100
                     },
-                    alcolismo: { 
-                        valor: 16, 
-                        min: 1, 
-                        max: 100 
+                    alcolismo: {
+                        valor: 16,
+                        min: 1,
+                        max: 100
                     },
-                    mental: { 
-                        valor: 9.3, 
-                        min: 1, 
-                        max: 100 
+                    mental: {
+                        valor: 9.3,
+                        min: 1,
+                        max: 100
                     },
-                    n_internacoes: { 
-                        valor: 7.8, 
-                        min: 1, 
-                        max: 100 
+                    n_internacoes: {
+                        valor: 7.8,
+                        min: 1,
+                        max: 100
                     },
-                    n_nascimentos: { 
-                        valor: 1.5, 
-                        min: 1, 
-                        max: 15 
+                    n_nascimentos: {
+                        valor: 1.5,
+                        min: 1,
+                        max: 15
                     },
-                    expectativa_de_vida: { 
-                        valor: 76.2, 
-                        min: 1, 
-                        max: 100 
+                    expectativa_de_vida: {
+                        valor: 76.2,
+                        min: 1,
+                        max: 100
                     },
-                    n_leitos: { 
-                        valor: 3, 
-                        min: 1, 
-                        max: 100 
+                    n_leitos: {
+                        valor: 3,
+                        min: 1,
+                        max: 100
                     }
                 };
 
                 this.prefeitura = prefeitura || {
-                    idade_media: { 
-                        valor: 35, 
-                        min: 1, 
-                        max: 100 
+                    idade_media: {
+                        valor: 35,
+                        min: 1,
+                        max: 100
                     },
-                    homens: { 
-                        valor: 48.5, 
-                        min: 1, 
-                        max: 99 
+                    homens: {
+                        valor: 48.5,
+                        min: 1,
+                        max: 99
                     },
-                    mulheres: { 
-                        valor: 51.5, 
-                        min: 1, 
-                        max: 99 
+                    mulheres: {
+                        valor: 51.5,
+                        min: 1,
+                        max: 99
                     },
-                    renda_media: { 
-                        valor: 1893, 
-                        min: 1, 
-                        max: 10000 
+                    renda_media: {
+                        valor: 1893,
+                        min: 1,
+                        max: 10000
                     },
-                    idh: { 
-                        valor: 0.760, 
-                        min: 0, 
-                        max: 1 
+                    idh: {
+                        valor: 0.760,
+                        min: 0,
+                        max: 1
                     },
-                    pobreza: { 
-                        valor: 5.9, 
-                        min: 1, 
-                        max: 100 
+                    pobreza: {
+                        valor: 5.9,
+                        min: 1,
+                        max: 100
                     },
-                    desemprego: { 
-                        valor: 7.8, 
-                        min: 1, 
-                        max: 31 
+                    desemprego: {
+                        valor: 7.8,
+                        min: 1,
+                        max: 31
                     },
-                    população: { 
-                        valor: 214000000, 
-                        min: 1, 
-                        max: 10000000000 
+                    população: {
+                        valor: 214000000,
+                        min: 1,
+                        max: 10000000000
                     },
-                    n_vereadores: { 
-                        valor: 16, 
-                        min: 1, 
-                        max: 100 
+                    n_vereadores: {
+                        valor: 16,
+                        min: 1,
+                        max: 100
                     }
                 };
 
                 this.academia = academia || {
-                    frequentadores: { 
-                        valor: 10.8, 
-                        min: 1, 
-                        max: 100 
+                    frequentadores: {
+                        valor: 10.8,
+                        min: 1,
+                        max: 100
                     },
-                    obesidade: { 
-                        valor: 24.3, 
-                        min: 1, 
-                        max: 100 
+                    obesidade: {
+                        valor: 24.3,
+                        min: 1,
+                        max: 100
                     },
-                    sedentarismo: { 
-                        valor: 47, 
-                        min: 1, 
-                        max: 100 
+                    sedentarismo: {
+                        valor: 47,
+                        min: 1,
+                        max: 100
                     },
-                    alimentacao_saudavel: { 
-                        valor: 70, 
-                        min: 1, 
-                        max: 100 
+                    alimentacao_saudavel: {
+                        valor: 70,
+                        min: 1,
+                        max: 100
                     }
                 };
 
                 this.sec_meio_ambiente = sec_meio_ambiente || {
-                    saneamento: { 
-                        valor: 56, 
-                        min: 1, 
-                        max: 100 
+                    saneamento: {
+                        valor: 56,
+                        min: 1,
+                        max: 100
                     },
-                    residuos: { 
-                        valor: 4, 
-                        min: 1, 
-                        max: 100 
+                    residuos: {
+                        valor: 4,
+                        min: 1,
+                        max: 100
                     },
-                    un_conservacao: { 
-                        valor: 36, 
-                        min: 1, 
-                        max: 100 
+                    un_conservacao: {
+                        valor: 36,
+                        min: 1,
+                        max: 100
                     },
-                    qualida_aqua: { 
-                        valor: 10, 
-                        min: 1, 
-                        max: 100 
+                    qualida_aqua: {
+                        valor: 10,
+                        min: 1,
+                        max: 100
                     },
-                    qualidade_ar: { 
-                        valor: 23, 
-                        min: 1, 
-                        max: 100 
+                    qualidade_ar: {
+                        valor: 23,
+                        min: 1,
+                        max: 100
                     },
-                    coleta_seletiva: { 
-                        valor: 4, 
-                        min: 1, 
-                        max: 100 
+                    coleta_seletiva: {
+                        valor: 4,
+                        min: 1,
+                        max: 100
                     },
-                    bioma_nativo: { 
-                        valor: 28, 
-                        min: 1, 
-                        max: 100 
+                    bioma_nativo: {
+                        valor: 28,
+                        min: 1,
+                        max: 100
                     },
-                    licencas: { 
-                        valor: 16, 
-                        min: 1, 
-                        max: 100 
+                    licencas: {
+                        valor: 16,
+                        min: 1,
+                        max: 100
                     }
                 };
             }
@@ -301,11 +303,11 @@
                 function impactoCalc(dados, factor) {
                     const critico = dados.min + 0.75 * (dados.max - dados.min);
                     if (dados.valor > critico) {
-                        return ((dados.valor ) ** factor);
+                        return ((dados.valor) ** factor);
                     } else {
                         return (dados.valor);
                     }
-    }
+                }
 
                 // Escola (Educação)
                 console.log(taxa)
@@ -314,7 +316,7 @@
                 taxa += impactoCalc(this.escola.analfabetismo, 1.25) * 1.5;
                 taxa += impactoCalc(this.escola.evasao, 1.15);
                 taxa += impactoCalc(this.escola.baixo_rendimento, 1.15);
-                taxa += impactoCalc(this.escola.idosos, 1.15)*1.5;
+                taxa += impactoCalc(this.escola.idosos, 1.15) * 1.5;
                 taxa += impactoCalc(this.escola.adultos, 1.15);
 
                 console.log(taxa)
@@ -332,7 +334,7 @@
                 console.log(taxa)
                 // Prefeitura (Economia)
                 taxa += impactoCalc(this.prefeitura.idade_media, 1.15);
-                taxa -= impactoCalc(this.prefeitura.renda_media, 1.15)/1000;
+                taxa -= impactoCalc(this.prefeitura.renda_media, 1.15) / 1000;
                 taxa /= impactoCalc(this.prefeitura.idh, 1.25) * 1.5;
                 taxa += impactoCalc(this.prefeitura.pobreza, 1.25) * 1.5;
                 taxa += impactoCalc(this.prefeitura.desemprego, 1.15);
@@ -358,10 +360,10 @@
                 console.log(taxa)
                 if (taxa >= 0) {
                     let mortes = Math.round(this.prefeitura.população.valor * (taxa / 10000))
-                    if(mortes <= this.prefeitura.população.valor){
+                    if (mortes <= this.prefeitura.população.valor) {
                         return mortes;
-                    }else{return this.prefeitura.população.valor;}
-            
+                    } else { return this.prefeitura.população.valor; }
+
                 }
                 return 0;
             }
@@ -577,7 +579,7 @@
                     <button onclick="paises[${index}].plusHospital('n_leitos', 0, 1); manageHospital(${index})">+</button>
                 </div>
             `;
-            
+
         }
 
         function manageEscola(index) {
@@ -632,7 +634,7 @@
             </br>
                 <div class="dado-buttons">
                     <button onclick="paises[${index}].plusEscola('jovens', 1, 10);paises[${index}].plusEscola('adultos', 0, 5);paises[${index}].plusEscola('idosos', 0, 5); manageEscola(${index})">-</button>
-                    <h2>Jovens: ${paises[index].escola["jovens"].valor/10} %</h2>
+                    <h2>Jovens: ${paises[index].escola["jovens"].valor / 10} %</h2>
 
                     <button onclick="paises[${index}].plusEscola('jovens', 0, 10);paises[${index}].plusEscola('adultos', 1, 5);paises[${index}].plusEscola('idosos', 1, 5); manageEscola(${index})">+</button>
                 </div>
@@ -640,7 +642,7 @@
             </br>
                 <div class="dado-buttons">
                     <button onclick="paises[${index}].plusEscola('adultos', 1, 10);paises[${index}].plusEscola('idosos', 0, 5);paises[${index}].plusEscola('jovens', 0, 5); manageEscola(${index})">-</button>
-                    <h2>Adultos: ${paises[index].escola["adultos"].valor/10} %</h2>
+                    <h2>Adultos: ${paises[index].escola["adultos"].valor / 10} %</h2>
 
                     <button onclick="paises[${index}].plusEscola('adultos', 0, 10);paises[${index}].plusEscola('idosos', 1, 5);paises[${index}].plusEscola('jovens', 1, 5); manageEscola(${index})">+</button>
                 </div>
@@ -648,7 +650,7 @@
             </br>
                 <div class="dado-buttons">
                     <button onclick="paises[${index}].plusEscola('idosos', 1, 10);paises[${index}].plusEscola('adultos', 0, 5);paises[${index}].plusEscola('jovens', 0, 5); manageEscola(${index})">-</button>
-                    <h2>Idosos: ${paises[index].escola["idosos"].valor/10} %</h2>
+                    <h2>Idosos: ${paises[index].escola["idosos"].valor / 10} %</h2>
 
                     <button onclick="paises[${index}].plusEscola('idosos', 0, 10);paises[${index}].plusEscola('adultos', 1, 5);paises[${index}].plusEscola('jovens', 1, 5); manageEscola(${index})">+</button>
                 </div>
@@ -706,7 +708,7 @@
                     <button onclick="paises[${index}].plusAcademia('alimentacao_saudavel', 0, 1); manageAcademia(${index})">+</button>
                 </div>
             `;
-            
+
         }
 
         function managePrefeitura(index) {
@@ -834,15 +836,14 @@
         }
 
         function limparCookies() {
-            var cookies = document.cookie.split(";"); 
-            
+            var cookies = document.cookie.split(";");
             for (var i = 0; i < cookies.length; i++) {
                 var cookie = cookies[i];
-                var eqPos = cookie.indexOf("="); 
+                var eqPos = cookie.indexOf("=");
 
-                var nome = eqPos > -1 ? cookie.substr(0, eqPos) : cookie; 
-
-                document.cookie = nome + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT"; 
+                var nome = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+                console.log(nome);
+                document.cookie = nome + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
             }
             location.reload();
         }
@@ -851,4 +852,5 @@
         window.onload = loadVariables;
     </script>
 </body>
+
 </html>
