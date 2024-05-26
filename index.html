@@ -56,17 +56,17 @@
                     jovens: { 
                         valor: 402, 
                         min: 10, 
-                        max: 1000 
+                        max: 980 
                     },
                     adultos: { 
                         valor: 505, 
                         min: 10, 
-                        max: 1000 
+                        max: 980 
                     },
                     idosos: { 
                         valor: 93, 
                         min: 10, 
-                        max: 1000 
+                        max: 980 
                     },
                     professores: { 
                         valor: 31, 
@@ -142,12 +142,12 @@
                     homens: { 
                         valor: 48.5, 
                         min: 1, 
-                        max: 100 
+                        max: 99 
                     },
                     mulheres: { 
                         valor: 51.5, 
                         min: 1, 
-                        max: 100 
+                        max: 99 
                     },
                     renda_media: { 
                         valor: 1893, 
@@ -155,9 +155,9 @@
                         max: 10000 
                     },
                     idh: { 
-                        valor: 760, 
+                        valor: 0.760, 
                         min: 0, 
-                        max: 1000 
+                        max: 1 
                     },
                     pobreza: { 
                         valor: 5.9, 
@@ -309,51 +309,51 @@
 
                 // Escola (Educação)
                 console.log(taxa)
-                taxa /= impactoCalc(this.escola.ensino_medio, 1.5) * 1.1;
-                taxa /= impactoCalc(this.escola.acesso_internet, 1.5);
-                taxa *= impactoCalc(this.escola.analfabetismo, 1.5) * 1.1;
-                taxa *= impactoCalc(this.escola.evasao, 1.5);
-                taxa *= impactoCalc(this.escola.baixo_rendimento, 1.52);
-                taxa *= impactoCalc(this.escola.idosos, 1.52)*1.1;
-                taxa *= impactoCalc(this.escola.adultos, 1.52);
+                taxa -= impactoCalc(this.escola.ensino_medio, 1.25) * 1.5;
+                taxa -= impactoCalc(this.escola.acesso_internet, 1.15);
+                taxa += impactoCalc(this.escola.analfabetismo, 1.25) * 1.5;
+                taxa += impactoCalc(this.escola.evasao, 1.15);
+                taxa += impactoCalc(this.escola.baixo_rendimento, 1.15);
+                taxa += impactoCalc(this.escola.idosos, 1.15)*1.5;
+                taxa += impactoCalc(this.escola.adultos, 1.15);
 
                 console.log(taxa)
                 // Hospital (Saúde)
-                taxa *= impactoCalc(this.hospital.tabagismo, 1.52) * 1.1;
-                taxa *= impactoCalc(this.hospital.hipertensao, 1.52) * 1.1;
-                taxa *= impactoCalc(this.hospital.doencas_respiratorias, 1.52) * 1.1;
-                taxa *= impactoCalc(this.hospital.diabetes, 1.52) * 1.1;
-                taxa /= impactoCalc(this.hospital.vacinacao, 1.52) * 1.1;
-                taxa *= impactoCalc(this.hospital.alcolismo, 1.52) * 1.1;
-                taxa *= impactoCalc(this.hospital.mental, 1.52);
-                taxa *= impactoCalc(this.hospital.n_internacoes, 1.52);
-                taxa /= impactoCalc(this.hospital.n_leitos, 1.52);
+                taxa += impactoCalc(this.hospital.tabagismo, 1.25) * 1.5;
+                taxa += impactoCalc(this.hospital.hipertensao, 1.25) * 1.5;
+                taxa += impactoCalc(this.hospital.doencas_respiratorias, 1.25) * 1.5;
+                taxa += impactoCalc(this.hospital.diabetes, 1.25) * 1.5;
+                taxa -= impactoCalc(this.hospital.vacinacao, 1.25) * 1.5;
+                taxa += impactoCalc(this.hospital.alcolismo, 1.25) * 1.5;
+                taxa += impactoCalc(this.hospital.mental, 1.15);
+                taxa += impactoCalc(this.hospital.n_internacoes, 1.15);
+                taxa -= impactoCalc(this.hospital.n_leitos, 1.15);
 
                 console.log(taxa)
                 // Prefeitura (Economia)
-                taxa *= impactoCalc(this.prefeitura.idade_media, 1.52);
-                taxa /= impactoCalc(this.prefeitura.renda_media, 1.52)*500;
-                taxa *= impactoCalc(this.prefeitura.idh, 1.52) * 1.1;
-                taxa *= impactoCalc(this.prefeitura.pobreza, 1.52) * 1.1;
-                taxa *= impactoCalc(this.prefeitura.desemprego, 1.52);
+                taxa += impactoCalc(this.prefeitura.idade_media, 1.15);
+                taxa -= impactoCalc(this.prefeitura.renda_media, 1.15)/1000;
+                taxa /= impactoCalc(this.prefeitura.idh, 1.25) * 1.5;
+                taxa += impactoCalc(this.prefeitura.pobreza, 1.25) * 1.5;
+                taxa += impactoCalc(this.prefeitura.desemprego, 1.15);
                 // mortes += (100 - this.prefeitura.população.valor);
 
                 console.log(taxa)
                 // Academia
-                taxa *= impactoCalc(this.academia.obesidade, 1.52);
-                taxa *= impactoCalc(this.academia.sedentarismo, 1.52);
-                taxa /= impactoCalc(this.academia.alimentacao_saudavel, 1.52);
+                taxa += impactoCalc(this.academia.obesidade, 1.15);
+                taxa += impactoCalc(this.academia.sedentarismo, 1.15);
+                taxa -= impactoCalc(this.academia.alimentacao_saudavel, 1.15);
 
                 console.log(taxa)
                 // Secretaria de Meio Ambiente (Ambiente)
-                taxa /= impactoCalc(this.sec_meio_ambiente.saneamento, 1.52) * 1.1;
-                taxa /= impactoCalc(this.sec_meio_ambiente.residuos, 1.52) * 1.1;
-                taxa /= impactoCalc(this.sec_meio_ambiente.un_conservacao, 1.5) * 1.1;
-                taxa /= impactoCalc(this.sec_meio_ambiente.qualida_aqua, 1.52) * 1.1;
-                taxa /= impactoCalc(this.sec_meio_ambiente.qualidade_ar, 1.52) * 1.1;
-                taxa /= impactoCalc(this.sec_meio_ambiente.coleta_seletiva, 1.52) * 1.1;
-                taxa /= impactoCalc(this.sec_meio_ambiente.bioma_nativo, 1.52) * 1.1;
-                taxa /= impactoCalc(this.sec_meio_ambiente.licencas, 1.52);
+                taxa -= impactoCalc(this.sec_meio_ambiente.saneamento, 1.25) * 1.5;
+                taxa -= impactoCalc(this.sec_meio_ambiente.residuos, 1.25) * 1.5;
+                taxa -= impactoCalc(this.sec_meio_ambiente.un_conservacao, 1.25) * 1.5;
+                taxa -= impactoCalc(this.sec_meio_ambiente.qualida_aqua, 1.25) * 1.5;
+                taxa -= impactoCalc(this.sec_meio_ambiente.qualidade_ar, 1.25) * 1.5;
+                taxa -= impactoCalc(this.sec_meio_ambiente.coleta_seletiva, 1.25) * 1.5;
+                taxa -= impactoCalc(this.sec_meio_ambiente.bioma_nativo, 1.25) * 1.5;
+                taxa -= impactoCalc(this.sec_meio_ambiente.licencas, 1.15);
 
                 console.log(taxa)
                 if (taxa >= 0) {
@@ -752,10 +752,10 @@
 
             </br>
                 <div class="dado-buttons">
-                    <button onclick="paises[${index}].plusPrefeitura('idh', 1, 1); managePrefeitura(${index})">-</button>
-                    <h2>IDH: ${paises[index].prefeitura["idh"].valor/1000}</h2>
+                    <button onclick="paises[${index}].plusPrefeitura('idh', 1, 0.005); managePrefeitura(${index})">-</button>
+                    <h2>IDH: ${paises[index].prefeitura["idh"].valor}</h2>
 
-                    <button onclick="paises[${index}].plusPrefeitura('idh', 0, 1); managePrefeitura(${index})">+</button>
+                    <button onclick="paises[${index}].plusPrefeitura('idh', 0, 0.005); managePrefeitura(${index})">+</button>
                 </div>
 
             </br>
