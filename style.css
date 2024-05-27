@@ -20,7 +20,7 @@ body {
 }
 
 #inputContainer {
-    width: 100vw;
+    width: 100%;
     max-width: 400px;
     display: flex;
     flex-direction: column;
@@ -73,7 +73,7 @@ h3{
 }
 
 .btn-menu-pais{
-    width: 100%;
+    width: 80%;
 }
 
 .menu button {
