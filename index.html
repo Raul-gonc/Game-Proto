@@ -9,11 +9,9 @@
 </head>
 
 <body>
-
-
     <div id="dadosContainer">
         <h1>Jogar</h1>
-        <h2>Nomeie os Paises:</h2>
+        <h2>Nome dos Paises:</h2>
         <div id="inputContainer">
             <input type="text" id="nomePais1" placeholder="País 1">
             <input type="text" id="nomePais2" placeholder="País 2">
@@ -390,7 +388,7 @@
             const dadosContainer = document.getElementById('dadosContainer');
             dadosContainer.innerHTML = `
                 <h1>${paises[index].name}</h1>
-                <h2>Total de Mortes: ${paises[index].rate()}</h2>
+                <h3 class="total_morte">Total de Mortes: ${paises[index].rate()}</h3>
                 <div class="menu">
                     <button onclick="manageEscola(${index})"><i class="fas fa-book"></i>  Escola</button></br>
                     <button onclick="manageAcademia(${index})"><i class="fas fa-dumbbell"></i>  Academia</button></br>
@@ -408,7 +406,7 @@
             dadosContainer.innerHTML = `
                 <h1>${paises[index].name}</h1>
                 <h2><i class="fas fa-leaf"></i>  Secretaria de Meio Ambiente</h2>
-                <h3>Taxa de mortalidade: ${paises[index].rate()}</h3>
+                <h3 class="total_morte">Total de Mortes: ${paises[index].rate()}</h3>
                 
                 <button onclick="pais(${index})"><i class="fas fa-arrow-left"></i>  Voltar</button>
 
@@ -486,7 +484,7 @@
             dadosContainer.innerHTML = `
                 <h1>${paises[index].name}</h1>
                 <h2><i class="fas fa-hospital"></i>  Hospital</h2>
-                <h3>Taxa de mortalidade: ${paises[index].rate()}</h3>
+                <h3 class="total_morte">Total de Mortes: ${paises[index].rate()}</h3>
                 
                 <button onclick="pais(${index})"><i class="fas fa-arrow-left"></i>  Voltar</button>
 
@@ -587,7 +585,7 @@
             dadosContainer.innerHTML = `
                 <h1>${paises[index].name}</h1>
                 <h2><i class="fas fa-book"></i>  Escola</h2>
-                <h3>Taxa de mortalidade: ${paises[index].rate()}</h3>
+                <h3 class="total_morte">Total de Mortes: ${paises[index].rate()}</h3>
                 
                 <button onclick="pais(${index})"><i class="fas fa-arrow-left"></i>  Voltar</button>
 
@@ -671,7 +669,7 @@
             dadosContainer.innerHTML = `
                 <h1>${paises[index].name}</h1>
                 <h2><i class="fas fa-dumbbell"></i>  Academia</h2>
-                <h3>Taxa de mortalidade: ${paises[index].rate()}</h3>
+                <h3 class="total_morte">Total de Mortes: ${paises[index].rate()}</h3>
 
                 <button onclick="pais(${index})"><i class="fas fa-arrow-left"></i>  Voltar</button>
 
@@ -716,7 +714,7 @@
             dadosContainer.innerHTML = `
                 <h1>${paises[index].name}</h1>
                 <h2><i class="fas fa-landmark"></i>  Prefeitura</h2>
-                <h3>Taxa de mortalidade: ${paises[index].rate()}</h3>
+                <h3 class="total_morte">Total de Mortes: ${paises[index].rate()}</h3>
                 
                 <button onclick="pais(${index})"><i class="fas fa-arrow-left"></i>  Voltar</button>
 
@@ -731,7 +729,7 @@
             </br>
                 <div class="dado-buttons">
                     <button onclick="paises[${index}].plusPrefeitura('homens', 1, 1); paises[${index}].plusPrefeitura('mulheres', 0, 1); managePrefeitura(${index})">-</button>
-                    <h2>homens: ${paises[index].prefeitura["homens"].valor}%</h2>
+                    <h2>Homens: ${paises[index].prefeitura["homens"].valor}%</h2>
 
                     <button onclick="paises[${index}].plusPrefeitura('homens', 0, 1); paises[${index}].plusPrefeitura('mulheres', 1, 1); managePrefeitura(${index})">+</button>
                 </div>
@@ -739,7 +737,7 @@
             </br>
                 <div class="dado-buttons">
                     <button onclick="paises[${index}].plusPrefeitura('mulheres', 1, 1); paises[${index}].plusPrefeitura('homens', 0, 1); managePrefeitura(${index})">-</button>
-                    <h2>mulheres: ${paises[index].prefeitura["mulheres"].valor}%</h2>
+                    <h2>Mulheres: ${paises[index].prefeitura["mulheres"].valor}%</h2>
 
                     <button onclick="paises[${index}].plusPrefeitura('mulheres', 0, 1); paises[${index}].plusPrefeitura('homens', 1, 1); managePrefeitura(${index})">+</button>
                 </div>
@@ -797,7 +795,7 @@
 
         function mostrarPaises() {
             const dadosContainer = document.getElementById('dadosContainer');
-            dadosContainer.innerHTML = '<h1>Paises</h1><button onclick="limparCookies();">reset</button>';
+            dadosContainer.innerHTML = '<h1>Paises</h1><button onclick="limparCookies();">Reiniciar</button>';
             paises.forEach((pais, index) => {
                 dadosContainer.innerHTML += `<button class="btn-menu-pais" onclick="pais(${index})">${pais.name}</button>`;
             });

@@ -20,7 +20,7 @@ body {
 }
 
 #inputContainer {
-    width: 100%;
+    width: 100vw;
     max-width: 400px;
     display: flex;
     flex-direction: column;
@@ -65,6 +65,13 @@ h3{
     font-size: 40px;
 }
 
+.total_morte{
+    position: sticky;
+    top:10%;
+    background-color: #f5f5f5;
+    padding: 1%;
+}
+
 .btn-menu-pais{
     width: 100%;
 }
@@ -75,7 +82,7 @@ h3{
 
 .dado-buttons {
     display: flex;
-    justify-content: space-between; /* Alinha os itens com espaço entre eles */
+    justify-content: space-between;  /* Alinha os itens com espaço entre eles */
     align-items: center; /* Centraliza verticalmente os itens */
     border: 1px solid #ccc; /* Adiciona uma borda */
     padding: 10px; /* Adiciona um espaçamento interno */
