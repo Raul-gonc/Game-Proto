@@ -65,12 +65,10 @@ h3{
     font-size: 40px;
 }
 
-.total_morte{
-    position: sticky;
-    top:10%;
+/* .total_morte{
     background-color: #f5f5f5;
     padding: 1%;
-}
+} */
 
 .btn-menu-pais{
     width: 80%;
@@ -129,4 +127,23 @@ h3{
         padding: 8px;
         font-size: 40px;
     }
+
+    .total_morte{
+        position: sticky;
+        top:5%;
+        background-color: #f5f5f5;
+        padding: 1%;
+    }
+    
 }
+
+@media (min-width: 500px) {
+    .total_morte{
+        position: sticky;
+        top:5%;
+        background-color: #f5f5f5;
+        padding: 1%;
+    }
+    
+}
+
